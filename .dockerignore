@@ -1,0 +1,8 @@
+.git
+.gitignore
+docs
+tests
+frontend
+*.md
+.env
+.vscode

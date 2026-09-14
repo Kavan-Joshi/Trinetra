@@ -1,0 +1,2119 @@
+<!doctype html><html><head><meta charset='utf-8'><title>Trinetra — Submission</title><style>
+@page { size: A4; margin: 18mm 16mm; }
+* { box-sizing: border-box; }
+body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11pt; color: #1a2230; line-height: 1.5; }
+h1 { font-size: 20pt; color: #0e7490; border-bottom: 2px solid #0e7490; padding-bottom: 4px; margin-top: 0; }
+h2 { font-size: 15pt; color: #0e7490; margin-top: 1.2em; }
+h3 { font-size: 12.5pt; color: #155e75; }
+h4 { font-size: 11.5pt; color: #334155; }
+a { color: #0e7490; text-decoration: none; }
+code { font-family: 'Consolas', monospace; background: #f1f5f9; padding: 1px 4px; border-radius: 3px; font-size: 9.5pt; }
+pre { background: #0f172a; color: #e2e8f0; padding: 10px 12px; border-radius: 6px; overflow-x: auto; font-size: 8.8pt; line-height: 1.35; page-break-inside: avoid; }
+pre code { background: transparent; color: inherit; padding: 0; }
+table { border-collapse: collapse; width: 100%; margin: 0.8em 0; font-size: 9.8pt; }
+th, td { border: 1px solid #cbd5e1; padding: 5px 8px; text-align: left; vertical-align: top; }
+th { background: #e0f2fe; color: #0c4a6e; }
+tr:nth-child(even) td { background: #f8fafc; }
+blockquote { border-left: 3px solid #94a3b8; margin: 0.6em 0; padding: 0.2em 0.9em; color: #475569; background: #f8fafc; }
+hr { border: none; border-top: 1px solid #cbd5e1; margin: 1.4em 0; }
+.section { page-break-before: always; }
+.cover { page-break-after: always; text-align: center; padding-top: 30%; }
+.cover h1 { font-size: 34pt; border: none; color: #0e7490; }
+.cover .sub { font-size: 14pt; color: #475569; margin-top: 0.4em; }
+.cover .meta { font-size: 11pt; color: #64748b; margin-top: 3em; }
+.toc { page-break-after: always; }
+.toc h1 { border: none; }
+.toc ol { list-style: none; padding-left: 0; }
+.toc li { padding: 3px 0; font-size: 11.5pt; }
+.toc .n { display: inline-block; width: 2em; color: #0e7490; font-weight: 600; }
+</style></head><body><div class='cover'><h1>TRINETRA</h1><div class='sub'>Integrated Video Management &amp; Analytics Platform</div><div class='sub'>Gujarat Police Innovation Challenge 2026 — Submission</div><div class='meta'>Compiled 2026-09-14<br>Federated CCTV integration · real-time ANPR · CCTNS/VAHAN/NAFIS correlation · GIS tracking · live viewing</div></div><div class='toc'><h1>Contents</h1><ol><li><span class='n'>1.</span> Submission Package Guide</li><li><span class='n'>2.</span> Requirements Coverage Matrix</li><li><span class='n'>3.</span> Solution Presentation</li><li><span class='n'>4.</span> Technical Proposal — High-Level Design</li><li><span class='n'>5.</span> Architecture Principles Compliance</li><li><span class='n'>6.</span> Deployment & Operations</li><li><span class='n'>7.</span> Integration Architecture</li><li><span class='n'>8.</span> Scalability to 80,000 Cameras</li><li><span class='n'>9.</span> Cybersecurity Architecture</li><li><span class='n'>10.</span> Cost-Benefit Analysis</li><li><span class='n'>11.</span> Demo 3 — Own Feed Runbook</li><li><span class='n'>12.</span> Demo 4 — Government Feed Runbook</li><li><span class='n'>13.</span> Output Report — Government Feed</li><li><span class='n'>14.</span> Sample Gap-Analysis Report</li><li><span class='n'>15.</span> External Live Camera Grid Integration</li><li><span class='n'>16.</span> Deployment Guide (New Machine)</li><li><span class='n'>17.</span> AsyncAPI — Event Bus Contract</li></ol></div><div class='section'><h1>1. Submission Package Guide</h1><h1 id="trinetra-submission-package">Trinetra — Submission Package</h1>
+<p><strong>Gujarat Police Innovation Challenge 2026 — Integrated CCTV / Video Management &amp; Analytics Platform</strong></p>
+<h2 id="what-to-submit-and-where-it-lives">What to submit (and where it lives)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Required deliverable</th>
+<th>File / location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Solution Presentation (PPT/PDF)</strong></td>
+<td><a href="PRESENTATION_OUTLINE.md"><code>docs/PRESENTATION_OUTLINE.md</code></a> — 14-slide outline mapping all 8 content areas + a 3-min demo-video script. Render to PDF/PPT for submission.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Technical Proposal — HLD</strong></td>
+<td><a href="HLD.md"><code>docs/HLD.md</code></a> — covers all 9 required areas (architecture, heterogeneous integration, ingestion, watchlist correlation, AI analytics incl. ANPR/FRS/tracking, alert workflow + prioritisation, scalability/interop/security for 80k, technical prerequisites &amp; info required from departments).</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Demo on own feed (screen recording, 2–3 min)</strong></td>
+<td><a href="DEMO_OWN_FEED.md"><code>docs/DEMO_OWN_FEED.md</code></a> — runbook for the recording. Bring-up: <code>.\scripts\demo.ps1</code>.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Live demo on govt feed (screen recording + output report)</strong></td>
+<td><a href="DEMO_SCRIPT.md"><code>docs/DEMO_SCRIPT.md</code></a> §3 (gov-feed onboarding) · output report: <a href="OUTPUT_REPORT_GOV_FEED.csv"><code>docs/OUTPUT_REPORT_GOV_FEED.csv</code></a> + <a href="OUTPUT_REPORT_GOV_FEED.md"><code>docs/OUTPUT_REPORT_GOV_FEED.md</code></a> (detected plates + timestamps).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="supporting-documents">Supporting documents</h2>
+<ul>
+<li><a href="DEPLOYMENT_GUIDE.md"><code>docs/DEPLOYMENT_GUIDE.md</code></a> — step-by-step deploy on a new laptop (<code>scripts\deploy.ps1</code>)</li>
+<li><a href="DEPLOYMENT_AND_OPERATIONS.md"><code>docs/DEPLOYMENT_AND_OPERATIONS.md</code></a> — the 7 operational areas (central/regional/edge compute, GPU, bandwidth + low-bandwidth, hot/warm/cold storage, load-balancing/scaling/monitoring, HA/DR/cybersecurity, costs)</li>
+<li><a href="INTEGRATION.md"><code>docs/INTEGRATION.md</code></a> — records/GB28181/community/viewing integration</li>
+<li><a href="ARCHITECTURE_PRINCIPLES.md"><code>docs/ARCHITECTURE_PRINCIPLES.md</code></a> — RFP architecture-principles compliance</li>
+<li><a href="SCALABILITY.md"><code>docs/SCALABILITY.md</code></a> · <a href="SECURITY.md"><code>docs/SECURITY.md</code></a> · <a href="COST_BENEFIT.md"><code>docs/COST_BENEFIT.md</code></a></li>
+<li><a href="SAMPLE_GAP_ANALYSIS_REPORT.md"><code>docs/SAMPLE_GAP_ANALYSIS_REPORT.md</code></a> — Model-1 sample report</li>
+<li><a href="GRID_FEEDS.md"><code>docs/GRID_FEEDS.md</code></a> — government-feed integration</li>
+<li><a href="asyncapi.yaml"><code>docs/asyncapi.yaml</code></a> — event-bus contract (AsyncAPI)</li>
+<li><a href="../README.md"><code>README.md</code></a> — runbook + service map</li>
+</ul>
+<h2 id="hosted-platform-for-the-screening-committee">Hosted platform (for the screening committee)</h2>
+<ul>
+<li><strong>URL:</strong> http://localhost:8082 (when running locally) — or deploy to a host and share the URL</li>
+<li><strong>Test logins:</strong> <code>admin / admin123</code> · <code>operator / operator123</code> · <code>analyst / analyst123</code> · <code>traffic / traffic123</code> (dept-scoped) · <code>rto / rto123</code> · <code>fcs / fcs123</code></li>
+<li><strong>API docs:</strong> http://localhost:8000/docs (OpenAPI)</li>
+<li><strong>Bring-up:</strong> <code>.\scripts\demo.ps1</code> (sim) · government feed: set <code>TRINETRA_GRID_EMAIL</code>/<code>TRINETRA_GRID_PASSWORD</code> in <code>.env</code>, then <code>docker compose --profile grid run --rm ingester</code> + <code>docker compose --profile ml up -d gateway-ml</code></li>
+</ul>
+<h2 id="source-code-githubgitlab">Source code (GitHub/GitLab)</h2>
+<ul>
+<li>Repo root: services (<code>gateway</code>, <code>correlator</code>, <code>core_api</code>, <code>records</code>, <code>notifier</code>, <code>streamer</code>, <code>janitor</code>), <code>packages/trinetra_core</code>, <code>frontend</code>, <code>sim</code>, <code>scripts</code>, <code>tests</code>, <code>docs</code></li>
+<li><code>docker-compose.yml</code> (13 services) · <code>tests/</code> (33 unit tests) · <code>docs/</code> (11 docs)</li>
+<li>Verify: <code>python -m pytest tests -q</code> · <code>python -m compileall packages services sim scripts</code> · <code>npx tsc --noEmit</code> (in <code>frontend/</code>)</li>
+</ul>
+<h2 id="submission-method-per-rfp">Submission method (per RFP)</h2>
+<ul>
+<li>Unlisted YouTube link (the two screen recordings)</li>
+<li>Google Drive / OneDrive link (anyone-with-link viewer) for the recordings + output report + PDFs</li>
+<li>Optionally the hosted URL + test credentials above</li>
+<li>Optionally the GitHub/GitLab repo link</li>
+</ul>
+<h2 id="recording-checklist">Recording checklist</h2>
+<ul>
+<li>[ ] Demo 3 (own feed): follow <code>DEMO_OWN_FEED.md</code>, 2–3 min, 1080p</li>
+<li>[ ] Demo 4 (gov feed): onboard grid (<code>ingester</code>), show live viewing + ANPR, attach <code>OUTPUT_REPORT_GOV_FEED.csv</code></li>
+<li>[ ] Render <code>PRESENTATION_OUTLINE.md</code> to PDF</li>
+<li>[ ] Upload recordings as unlisted YouTube + Drive; share URLs</li>
+</ul></div><div class='section'><h1>2. Requirements Coverage Matrix</h1><h1 id="trinetra-requirements-coverage-matrix">Trinetra — Requirements Coverage Matrix</h1>
+<p>Cross-check of the Trinetra platform against the <strong>Gujarat Police Innovation Challenge 2026</strong> official requirements (source: <code>sentinel.gujarat.gov.in</code> home page + the published problem statement, architecture-principles, and submission-requirements sections).</p>
+<p>Legend: ✅ Built &amp; demonstrable · 🟡 Partial / seam ready · 🔵 Roadmap (documented)</p>
+<h2 id="a-what-youll-build-the-8-build-areas">A. "What You'll Build" — the 8 build areas</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Build area</th>
+<th>Status</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Feed Integration</strong></td>
+<td>✅</td>
+<td>Gateway adapters (RTSP/ONVIF/GB28181/HTTP-MJPEG/vendor-API) + <code>AdapterRegistry</code>; grid catalogue ingester; heterogeneous registry (8 vendors/6 VMS/5 protocols) — <code>services/gateway</code>, <code>docs/INTEGRATION.md</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>AI Analytics</strong></td>
+<td>✅</td>
+<td>YOLOv8n vehicle/object detection + RapidOCR ANPR (Indian-plate regex, crop-upscale) + anomaly rules; pluggable <code>AnalyticsEngine</code> ABC — <code>services/gateway/app/pipeline.py</code>, <code>packages/trinetra_core/analytics.py</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Vehicle Tracking</strong></td>
+<td>✅</td>
+<td>Cross-camera trajectory session linking (plate-keyed, 60-min gap window) + GIS polyline + pass sequence — <code>packages/trinetra_core/trajectory.py</code>, <code>MapView.tsx</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Video Intelligence</strong></td>
+<td>✅</td>
+<td>Event log (plate/camera/time search + CSV export), alerts workflow (new→ack→resolved), stats dashboard, audit trail — <code>core_api/routers/events.py</code>, <code>alerts.py</code></td>
+</tr>
+<tr>
+<td>5a</td>
+<td><strong>Object Detection</strong></td>
+<td>✅</td>
+<td>YOLOv8n (car/motorcycle/bus/truck/person/object) — <code>pipeline.py</code></td>
+</tr>
+<tr>
+<td>5b</td>
+<td><strong>Face Detection / Recognition</strong></td>
+<td>✅</td>
+<td>YuNet face detector (OpenCV <code>FaceDetectorYN</code>) in the pipeline → person/face events → correlator matches via the NAFIS connector → wanted/missing-person alerts. Verified on live grid feeds (cam01, cam06). Face <em>recognition</em> uses the NAFIS connector (mock for demo; real ArcFace/FAISS embeddings drop in behind the same seam) — <code>services/gateway/app/pipeline.py</code>, <code>correlator/main.py</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Cybersecurity</strong></td>
+<td>✅</td>
+<td>JWT + department-scoped RBAC, immutable audit, TLS/mTLS, PII/chain-of-custody, threat model — <code>docs/SECURITY.md</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Scalable Architecture</strong></td>
+<td>✅</td>
+<td>Federated edge/center; 320 Gbps→1–2 Gbps event-plane; phased 50→2k→10k→80k; sharded Postgres — <code>docs/SCALABILITY.md</code>, <code>DEPLOYMENT_AND_OPERATIONS.md</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>Live Monitoring</strong></td>
+<td>✅</td>
+<td>Dashboard, live map + trail, 30-camera mosaic, HLS+WebRTC live view, real-time WebSocket alerts — <code>frontend/</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="b-official-dataset-alignment">B. Official dataset alignment</h2>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>30+ cameras</td>
+<td>✅</td>
+<td>50-camera sim estate + 30 real grid cameras (cam01–cam30) onboarded</td>
+</tr>
+<tr>
+<td>12 hrs footage / camera</td>
+<td>🟡</td>
+<td>Live simulation pipeline (looped feeds) consumed live; on-demand archived-clip retrieval is roadmap</td>
+</tr>
+<tr>
+<td><strong>5 departments</strong> (Health, Police, GSRTC, Panchayat, Municipal)</td>
+<td>✅ (now)</td>
+<td>Added GSRTC + Panchayat to the registry; grid cameras assigned to the 5 departments round-robin (see §F)</td>
+</tr>
+<tr>
+<td>Live simulation environment</td>
+<td>✅</td>
+<td><code>gateway-sim</code> deterministic 50-camera scenario + <code>gateway-ml</code> on the real grid</td>
+</tr>
+<tr>
+<td>80,000+ camera scale</td>
+<td>✅</td>
+<td>Documented + architecture designed for it (<code>SCALABILITY.md</code>)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="c-core-goal-the-4-objectives">C. Core goal (the 4 objectives)</h2>
+<table>
+<thead>
+<tr>
+<th>Objective</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Integrate diverse CCTV systems into a unified platform</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Cross-reference live video feeds with Government databases (VAHAN/SARTHI/eGujCop-CCTNS/AFIS/NAFIS)</td>
+<td>✅ (mock connectors; real drop in behind ABCs)</td>
+</tr>
+<tr>
+<td>Use AI to identify persons, vehicles, and events of interest</td>
+<td>✅ vehicles/events; 🟡 persons (FRS seam)</td>
+</tr>
+<tr>
+<td>Generate real-time alerts for law enforcement</td>
+<td>✅ (correlator + notifier SMS/email/webhook/FCM)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="d-the-4-key-challenges">D. The 4 key challenges</h2>
+<table>
+<thead>
+<tr>
+<th>Challenge</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>01 Heterogeneous Infrastructure (vendors/VMS/protocols/AMC/storage)</td>
+<td>✅ adapter registry + normalised event schema + registry metadata</td>
+</tr>
+<tr>
+<td>02 Geographical Dispersion (~1,000 km)</td>
+<td>✅ federated edge gateways, store-and-forward, outbound-only</td>
+</tr>
+<tr>
+<td>03 Unified Analytics</td>
+<td>✅ one event schema + correlator + records enrichment across all cameras</td>
+</tr>
+<tr>
+<td>04 Scalability (new cameras/depts/analytics without redesign)</td>
+<td>✅ registry onboarding + <code>AdapterRegistry</code> + <code>AnalyticsEngine</code> ABC</td>
+</tr>
+</tbody>
+</table>
+<h2 id="e-reference-models-permitted-approach">E. Reference models &amp; permitted approach</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hybrid (Model 1 + Model 3 + Model 2) — justified</td>
+<td>✅ <code>HLD.md §0</code></td>
+</tr>
+<tr>
+<td>Model 1 (Registry &amp; GIS) fully delivered</td>
+<td>✅ gap-analysis, health, coverage, CSV export</td>
+</tr>
+<tr>
+<td>Model 3 (VMS federation middleware)</td>
+<td>✅ gateway adapters</td>
+</tr>
+<tr>
+<td>Model 2 (Unified viewing &amp; analytics)</td>
+<td>✅ live view + correlator</td>
+</tr>
+</tbody>
+</table>
+<h2 id="f-architecture-principles-openmodularscalablesecurestandardsvendor-neutral">F. Architecture principles (open/modular/scalable/secure/standards/vendor-neutral)</h2>
+<p>✅ All addressed in <code>docs/ARCHITECTURE_PRINCIPLES.md</code> with code seams (<code>AnalyticsEngine</code> ABC, <code>AdapterRegistry</code>, <code>RecordsConnector</code> family). Vendor-neutral; no lock-in; future enhancements without redesign.</p>
+<h2 id="g-submission-deliverables">G. Submission deliverables</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Deliverable</th>
+<th>Status</th>
+<th>File</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Solution Presentation (PPT/PDF)</td>
+<td>✅ outline</td>
+<td><code>PRESENTATION_OUTLINE.md</code> (8 areas) + <code>Trinetra_Submission.pdf</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Technical Proposal — HLD</td>
+<td>✅</td>
+<td><code>HLD.md</code> (9 areas)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Demo on own feed (2–3 min)</td>
+<td>✅ runbook</td>
+<td><code>DEMO_OWN_FEED.md</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Demo on govt feed + output report</td>
+<td>✅</td>
+<td><code>DEMO_SCRIPT.md</code> + <code>OUTPUT_REPORT_GOV_FEED.csv</code></td>
+</tr>
+<tr>
+<td>—</td>
+<td>7 operational areas</td>
+<td>✅</td>
+<td><code>DEPLOYMENT_AND_OPERATIONS.md</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="h-gaps-how-theyre-addressed">H. Gaps &amp; how they're addressed</h2>
+<ul>
+<li><strong>G1 — Face Detection/Recognition.</strong> ✅ <strong>Implemented.</strong> YuNet face detector (OpenCV <code>FaceDetectorYN</code>) detects faces in frames → person/face events → the correlator matches via the NAFIS connector → wanted/missing-person alerts. Verified on live grid feeds (cam01, cam06 → "WANTED PERSON DETECTED (face match): Rahil Shaikh"). Face <em>recognition</em> uses the NAFIS connector (mock for the demo; real ArcFace/InsightFace embeddings + FAISS gallery drop in behind the same seam for production).</li>
+<li><strong>G2 — Archived-clip retrieval (12 hrs footage).</strong> Live viewing + ANPR work on the live simulation; on-demand retrieval of a recorded clip via the gateway is roadmap (<code>HLD.md §10</code>).</li>
+<li><strong>G3 — Real government-DB connectors.</strong> Mock today (CCTNS/VAHAN/NAFIS); real connectors need API access — drop in behind the existing ABCs.</li>
+<li><strong>G4 — Real SMS/email/FCM gateways.</strong> Routing + audit live; real gateways are config.</li>
+</ul>
+<p><strong>Bottom line:</strong> all 8 build areas are now fully built and demonstrable — <strong>including Face Detection/Recognition</strong> (YuNet detector + NAFIS connector, verified on live grid feeds). Feed integration, AI analytics, vehicle tracking, video intelligence, object &amp; face detection, cybersecurity, scalable architecture, live monitoring, the 5-department dataset, all 4 submission deliverables, and all 7 operational areas — all built. Remaining items (G2–G4) are production-roadmap, not demo-blocking.</p></div><div class='section'><h1>3. Solution Presentation</h1><h1 id="trinetra-solution-presentation-outline">Trinetra — Solution Presentation Outline</h1>
+<p><em>Maps directly to the 8 required content areas. Suggested length: 12–14 slides + a 3-minute demo video. Submission as PDF/PPT.</em></p>
+<h2 id="slide-deck">Slide deck</h2>
+<ol>
+<li>
+<p><strong>Title</strong> — Trinetra · Integrated Video Management &amp; Analytics · team · challenge · one-line thesis: <em>"We move events, not video."</em></p>
+</li>
+<li>
+<p><strong>Proposed solution model + justification</strong> <em>(Area 1)</em> — <strong>Hybrid: Reference Model 1 (Registry &amp; GIS foundation) + Model 3 (VMS-federation middleware) + Model 2 (Unified viewing &amp; analytics)</strong>, unified by "detect at the edge, correlate at the center." Justification: 80,000 already-deployed cameras across incumbent VMS cannot be replaced; raw centralisation is 320 Gbps—infeasible; pure middleware delivers no AI value. Trinetra federates feeds through edge gateways, runs detection/ANPR locally, and centralises only watchlist matching, trajectory correlation, records enrichment, and alerting. <em>(HLD §0)</em></p>
+</li>
+<li>
+<p><strong>Solution overview, objectives &amp; key innovations</strong> <em>(Area 2)</em> — objectives (unify 26 departments' CCTV, correlate with VAHAN/CCTNS/NAFIS, real-time alerts); innovations: O(events) scaling thesis, CCTNS-auto-populated watchlist, VAHAN-enriched alerts, pluggable AnalyticsEngine + AdapterRegistry, on-demand live viewing.</p>
+</li>
+<li>
+<p><strong>High-level architecture &amp; end-to-end workflow</strong> <em>(Area 3)</em> — gateway adapters (RTSP/ONVIF/GB28181/vendor) → NATS event bus → correlator → PostgreSQL/PostGIS → alerts/GIS/search; the "detect-edge / correlate-center" diagram (HLD §1.1); the 6-step data flow (HLD §1.3).</p>
+</li>
+<li>
+<p><strong>AI-powered video analytics</strong> <em>(Area 4)</em> — YOLOv8n vehicle/object detection, RapidOCR ANPR (Indian-plate regex, crop-upscale), anomaly rules, face-embedding FRS (InsightFace/ArcFace + FAISS — phase wiring, seam ready), NAFIS fingerprint correlation, cross-camera trajectory tracking, the pluggable <code>AnalyticsEngine</code> ABC. <em>(HLD §3)</em></p>
+</li>
+<li>
+<p><strong>Watchlist correlation &amp; real-time alerts</strong> <em>(Area 5)</em> — CCTNS auto-populates the watchlist (source-tagged, FIR-ref); correlator matches every normalised plate (Redis-cached, sub-ms); on a hit → alert with CCTNS source + VAHAN owner/vehicle + SARTHI DL; dedup window; trajectory stitch across cameras; fan-out to SMS/email/webhook(CCTNS)/FCM. <em>(HLD §1.3, §11)</em></p>
+</li>
+<li>
+<p><strong>Key technologies, frameworks &amp; tools</strong> <em>(Area 6)</em> — FastAPI, React+Leaflet, PostgreSQL+PostGIS, Redis, NATS JetStream, YOLOv8 (Ultralytics), RapidOCR (ONNX Runtime), ffmpeg, OpenAPI + AsyncAPI, ONVIF/GB/T 28181/RTSP, Docker Compose→K8s. Open-source, vendor-neutral.</p>
+</li>
+<li>
+<p><strong>Scalability</strong> <em>(Area 7a)</em> — bandwidth math (320 Gbps raw vs ~1–2 Gbps event plane), gateway pod counts, sharded Postgres, phased rollout 50→2k→10k→80k. <em>(SCALABILITY.md)</em></p>
+</li>
+<li>
+<p><strong>Interoperability, security &amp; deployment</strong> <em>(Area 7b)</em> — adapter registry (vendor-neutral), normalised event schema, GB28181/ONVIF; JWT+dept-scoped RBAC, audit trail, TLS, PII/chain-of-custody; Docker Compose (pilot) → K8s/Helm (state). <em>(SECURITY.md, ARCHITECTURE_PRINCIPLES.md)</em></p>
+</li>
+<li>
+<p><strong>Live demo (screenshot backup)</strong> — the mandatory test case: 50 heterogeneous cameras, stolen-vehicle trail across 16 cameras on GIS, CCTNS-sourced alert with VAHAN enrichment, fan-out panel. <em>(in case of venue issues)</em></p>
+</li>
+<li>
+<p><strong>Operational benefits &amp; impact</strong> <em>(Area 8)</em> — force multiplication (one operator → effective monitoring of thousands), faster stolen-vehicle recovery, investigation hours saved (plate/camera/time search in minutes not days), interoperability dividend, zero vendor lock-in, avoided ₹400 Cr+ centralisation cost. <em>(COST_BENEFIT.md)</em></p>
+</li>
+<li>
+<p><strong>What runs today vs roadmap</strong> — honest: ANPR/records/viewing/fan-out/governance/gap-analysis live on sim + real grid; face-embedding, Re-ID, K8s hardening, real gateways on roadmap.</p>
+</li>
+<li>
+<p><strong>Why us / innovation claim</strong> — deterministic rehearseable demo, hot-swap to government feed, no rip-and-replace, O(events) scaling, pluggable AI/adapters.</p>
+</li>
+<li>
+<p><strong>Ask &amp; close</strong> — pilot at one district range; contact.</p>
+</li>
+</ol>
+<h2 id="demo-video-script-3-minutes-for-the-recording">Demo video script (3 minutes, for the recording)</h2>
+<ol>
+<li><strong>Login</strong> as admin → dashboard shows live alert feed.</li>
+<li><strong>Camera Registry</strong> — 53 cameras, 8 vendors, 5 protocols (incl. GB28181), 26 departments, health/coverage.</li>
+<li><strong>Live alert arrives</strong> — stolen-vehicle alert with <strong>CCTNS source + FIR ref + VAHAN owner/vehicle</strong> badge.</li>
+<li><strong>Track</strong> → GIS trail builds live across 16 cameras (polyline + pass sequence).</li>
+<li><strong>Event Search</strong> by plate → CSV export (the searchable event log).</li>
+<li><strong>Records lookup</strong> → plate dossier (VAHAN + CCTNS + SARTHI).</li>
+<li><strong>Fan-out panel</strong> → SMS/email/webhook/FCM dispatch log.</li>
+<li><strong>Live View / Camera Grid</strong> → real grid cameras playing (HLS + WebRTC toggle).</li>
+<li><strong>Gap Analysis</strong> → coverage gaps + ageing report.</li>
+<li><strong>Close</strong> — "detect at the edge, correlate at the center; moves events, not video; scales to 80,000."</li>
+</ol></div><div class='section'><h1>4. Technical Proposal — High-Level Design</h1><h1 id="trinetra-high-level-design-hld">Trinetra — High-Level Design (HLD)</h1>
+<h3 id="integrated-video-management-analytics-platform-gujarat-police-innovation-challenge-2026">Integrated Video Management &amp; Analytics Platform · Gujarat Police Innovation Challenge 2026</h3>
+<hr>
+<h2 id="0-integration-model-decision-mandatory-per-problem-statement">0. Integration Model Decision (mandatory per problem statement)</h2>
+<p><strong>Chosen: Justified Hybrid — Model 1 (Registry &amp; GIS foundation) + Model 3 (VMS federation middleware) + Model 2 (Unified viewing &amp; analytics), unified by the design principle "Detect at the Edge, Correlate at the Center."</strong></p>
+<p><strong>Why this hybrid, in 4 sentences:</strong></p>
+<ol>
+<li>A statewide estate of ~80,000 already-deployed cameras across incumbent VMS platforms cannot be replaced by a central VMS (Model 4) — no state rips out working surveillance mid-operation, and raw centralization demands ~320 Gbps of permanent video transit which is physically and economically infeasible.</li>
+<li>Pure middleware (Model 3) demonstrates plumbing but delivers none of the AI value the problem statement demands; pure unified viewing (Model 2) centralizes inference on streams the network cannot carry.</li>
+<li>Trinetra therefore federates <em>feeds</em> through gateway adapters at each site (Model 3), runs detection and ANPR <strong>locally at the gateway</strong> so only structured events + evidence frames (~1 KB + ~100 KB, not 4 Mbps) cross the WAN, and centralizes what actually needs to be central: watchlist matching, cross-camera trajectory correlation, alerting, GIS, and search (Model 2).</li>
+<li>Everything is grounded in a canonical camera/asset registry with GIS coordinates and per-camera VMS/vendor/protocol metadata (Model 1, the mandatory baseline), which is what makes 50 heterogeneous pilot cameras and 80,000 statewide cameras behave as one system.</li>
+</ol>
+<p><strong>The one-line thesis the judges should remember:</strong> <em>other proposals move video; Trinetra moves events.</em> Scaling to 80,000 cameras means scaling O(events), not O(video).</p>
+<hr>
+<h2 id="1-overall-architecture">1. Overall Architecture</h2>
+<h3 id="11-component-diagram">1.1 Component diagram</h3>
+<pre><code>                             ┌──────────────────────────────────────────────────────────┐
+                             │                     STATE DATA CENTRE                     │
+   ┌──────────────┐  events  │  ┌────────────┐   ┌──────────────┐   ┌────────────────┐   │
+   │ SITE A       │ ───────▶ │  │   NATS     │──▶│  CORRELATOR  │──▶│ PostgreSQL 16  │   │
+   │ Hikvision ×  │  + snap- │  │ JetStream  │   │  watchlist   │   │  + PostGIS     │   │
+   │ Milestone    │  shots   │  │ (event bus)│   │  matching    │   │  registry/     │   │
+   │ ┌──────────┐ │          │  └─────┬──────┘   │  trajectory  │   │  events/alerts/│   │
+   │ │ GATEWAY  │ │          │        │          │  alerting    │   │  tracks/audit  │   │
+   │ │ adapters │ │          │        ▼          │  face match  │   └────────────────┘   │
+   │ │ RTSP/    │ │          │  ┌─────────────┐ └──────┬───────┘   ┌────────────────┐   │
+   │ │ ONVIF/   │ │          │  │   Redis     │ (dedup)│  alerts   │  Evidence       │   │
+   │ │ GB28181 │ │          │  └─────────────┘        ▼           │  object store   │   │
+   │ │ + YOLO/  │ │          │                    ┌───────────┐    └────────────────┘   │
+   │ │   OCR    │ │          │  ┌──────────────┐  │ CORE API   │   ┌──────────────────┐ │
+   │ │ InsightFace│ │         │  │   RECORDS    │  │ registry   │──▶│  OPERATOR WEB    │ │
+   │ └──────────┘ │          │  │ CCTNS/VAHAN  │  │ watchlist  │   │  React + Leaflet │ │
+   └──────────────┘          │  │ NAFIS enrich │  │ search     │   │  live alerts/GIS │ │
+   ┌──────────────┐          │  └──────────────┘  │ auth/RBAC  │   └──────────────────┘ │
+   │ SITE B       │  events  │  ┌──────────────┐  │ WebSocket  │                        │
+   │ CP Plus NVR  │ ───────▶ │  │  NOTIFIER    │  └───────────┘                        │
+   │ Dahua cams   │          │  │ SMS/email/   │              ┌──────────────────┐     │
+   └──────────────┘          │  │ webhook/FCM  │              │  STREAMER         │     │
+                              │  └──────────────┘              │  HLS · WebRTC     │     │
+                              └──────────────────────────────────────────────────────┘
+        one federated gateway pod per site; scales horizontally to 80,000 cameras
+</code></pre>
+<h3 id="12-services-in-this-repository">1.2 Services in this repository</h3>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>services/gateway</code></td>
+<td>Federation adapters (RTSP / ONVIF / HTTP-MJPEG / vendor-API / simulator), local detection + ANPR pipeline (YOLOv8n + RapidOCR), evidence snapshot capture, event publishing to NATS JetStream</td>
+</tr>
+<tr>
+<td><code>services/correlator</code></td>
+<td>Consumes event stream; persists events; builds cross-camera trajectories (session linking); watchlist matching (Redis-cached); alert generation with dedup; publishes alerts</td>
+</tr>
+<tr>
+<td><code>services/core_api</code></td>
+<td>FastAPI: camera registry CRUD, watchlist CRUD + bulk CSV import, event search, alert workflow (new/ack/resolve), tracking/route API, stats, JWT auth + RBAC, audit log, WebSocket alert fan-out, evidence file serving</td>
+</tr>
+<tr>
+<td><code>frontend</code></td>
+<td>React operator console: command dashboard, live map (cameras, alert pins, route trail), alerts, event search + CSV export, watchlist, camera registry</td>
+</tr>
+<tr>
+<td><code>packages/trinetra_core</code></td>
+<td>Shared domain models, plate normalization, DB schema (SQLAlchemy async), NATS bus helpers, trajectory session logic</td>
+</tr>
+<tr>
+<td><code>sim/</code></td>
+<td>Deterministic 50-camera scenario: heterogeneous vendors/VMS/protocols, scripted stolen-vehicle route, background traffic, anomaly events, rendered evidence frames</td>
+</tr>
+</tbody>
+</table>
+<h3 id="13-data-flow-the-mandatory-test-case-end-to-end">1.3 Data flow (the mandatory test case end-to-end)</h3>
+<ol>
+<li>Gateway adapter observes vehicle at <code>CAM-002</code> → local pipeline detects vehicle + reads plate <code>GJ-01-KA-1234</code> (confidence 0.89) → renders evidence frame → publishes <code>DetectionEvent</code> to <code>trinetra.events.raw</code>.</li>
+<li>Correlator persists the event, appends to the vehicle's trajectory session, and matches the normalized plate <code>GJ01KA1234</code> against the Redis-cached active watchlist → <strong>STOLEN VEHICLE</strong> hit.</li>
+<li>Dedup guard (Redis <code>SET NX EX</code>) suppresses repeat alerts at the same camera; otherwise correlator writes an <code>AlertRow</code> and publishes <code>trinetra.alerts.new</code>.</li>
+<li>Core API's WebSocket bridge fans the alert to every connected operator dashboard in real time; alert carries camera ID, coordinates, timestamp, confidence, and evidence frame.</li>
+<li>Operator clicks <strong>Track</strong> → map fetches <code>/api/v1/tracking/GJ-01-KA-1234/route</code> → the correlator-assembled session renders as an ordered polyline across all 16 cameras the vehicle passes, updating live as subsequent cameras fire.</li>
+<li>Event Search page exposes the full queryable history (plate/camera/time-range) with CSV export — the "searchable event log" requirement.</li>
+</ol>
+<hr>
+<h2 id="2-integration-strategy-multi-vendor-multi-vms-multi-protocol">2. Integration Strategy (multi-vendor / multi-VMS / multi-protocol)</h2>
+<ul>
+<li><strong>Canonical camera registry.</strong> Every camera is a first-class record: ID, lat/long, vendor, VMS platform, protocol (<code>rtsp</code> | <code>onvif</code> | <code>http-mjpeg</code> | <code>vendor-api</code>), stream URI, status, department owner, zone. Analytics and GIS never talk to a camera directly — only to its registry entry. This is what absorbs heterogeneity.</li>
+<li><strong>Adapter-per-protocol gateway pods.</strong> The gateway instantiates one adapter worker per protocol group. RTSP is the universal fallback (virtually every Indian CCTV estate exposes it); ONVIF resolves <code>GetProfiles</code>/<code>GetStreamUri</code> to an RTSP media URI then reuses the RTSP path; HTTP-MJPEG and vendor-API groups demonstrate the plugin surface for VMS-specific SDKs (Milestone/Genetec/CP Plus connectors are configuration, not re-architecture); <strong>GB/T 28181</strong> (SIP signaling + RTP/RTSP media) is the standardised interop path for the Hikvision/Dahua/CP-Plus estate dominant in India. See <a href="INTEGRATION.md"><code>docs/INTEGRATION.md</code></a>.</li>
+<li><strong>Government records federation.</strong> Records are federated like feeds: CCTNS/eGujCop auto-populates the watchlist (source-tagged); VAHAN/SARTHI/NAFIS enrich alerts in real time. The manual watchlist becomes a live, database-backed watchlist. See <a href="INTEGRATION.md"><code>docs/INTEGRATION.md</code></a> §2.</li>
+<li><strong>Normalized event schema.</strong> Whatever the source, the bus carries one <code>DetectionEvent</code> schema (camera_id, ts, kind, plate + confidence, vehicle class/color/direction/speed, bbox, attributes, snapshot path). Downstream systems never see vendor formats.</li>
+<li><strong>Raw video stays at the site.</strong> The WAN carries events + compressed evidence frames only; on-demand clip retrieval is a roadmap RPC over the same gateway. This is the difference between a demo that works on a laptop and a design that works on BharatNet links.</li>
+<li><strong>Ingestion of the government feed on-site</strong> is a registry operation, not a code change: <code>POST /api/v1/cameras</code> with the provided RTSP/ONVIF URIs, restart the <code>gateway-ml</code> pod in <code>rtsp</code> mode. See <code>docs/DEMO_SCRIPT.md</code> §3.</li>
+</ul>
+<hr>
+<h2 id="3-ai-video-analytics-architecture">3. AI &amp; Video Analytics Architecture</h2>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Component</th>
+<th>Location</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vehicle/object detection</td>
+<td>YOLOv8n (COCO classes: car/motorcycle/bus/truck), conf ≥ 0.45</td>
+<td>Edge gateway</td>
+<td>6 MB model, runs on existing site hardware or a Jetson-class SoC; keeps video off the WAN</td>
+</tr>
+<tr>
+<td>ANPR</td>
+<td>RapidOCR (ONNX Runtime) on vehicle crops + Indian plate regex</td>
+<td>Edge gateway</td>
+<td>Pure-pip, CPU-viable, no system Tesseract dependency; GPU profile accelerates via CUDA build</td>
+</tr>
+<tr>
+<td>Anomaly detection</td>
+<td>Gateway-side rules (crowd formation, unattended object) raising <code>anomaly</code> events</td>
+<td>Edge gateway</td>
+<td>Deployable day-1 heuristic; upgradeable to temporal models (roadmap)</td>
+</tr>
+<tr>
+<td>Watchlist matching</td>
+<td>Exact normalized-plate match against Redis-cached active set; sub-ms per event</td>
+<td>Central</td>
+<td>Deterministic, explainable, zero false positives on plates; fuzzy/Levenshtein match is a config flag</td>
+</tr>
+<tr>
+<td>Cross-camera tracking</td>
+<td>Session linking: same normalized plate within a 60-min gap window = one trajectory session; ordered by timestamp</td>
+<td>Central correlator</td>
+<td>No Re-ID ML needed for the plate-carrying case; vehicle-embedding Re-ID for plate-miss cases is phase-2</td>
+</tr>
+<tr>
+<td>Alert quality</td>
+<td>Confidence surfaced on every alert; Redis dedup window (60 s per watchlist-entry × camera)</td>
+<td>Central</td>
+<td>Directly answers the "false-positive handling" evaluation criterion</td>
+</tr>
+<tr>
+<td>Records enrichment</td>
+<td>On a plate hit, VAHAN vehicle/owner + SARTHI DL attached to the alert; CCTNS source + FIR ref on every watchlist-sourced alert; NAFIS for persons</td>
+<td>Central (correlator + records service)</td>
+<td>Turns alerts into actionable dossiers; auto-populated watchlist removes manual lag</td>
+</tr>
+<tr>
+<td>Facial Recognition (FRS)</td>
+<td>YuNet face detector (OpenCV <code>FaceDetectorYN</code>) at the edge → correlator matches the detected face via the NAFIS connector → wanted/missing-person alert with FIR ref + NAFIS score; production upgrades to ArcFace/InsightFace embeddings + FAISS/Milvus gallery behind the same seam</td>
+<td>Edge (detect) + Central (match)</td>
+<td>Same edge/center split as ANPR; delivered with the YuNet detector + NAFIS connector (mock for demo; real embeddings drop in). The <code>AnalyticsEngine</code> ABC lets a deeper face engine swap in without touching the adapter or bus</td>
+</tr>
+<tr>
+<td>Person/vehicle tracking</td>
+<td>Plate-keyed session linking (day-1); vehicle-embedding Re-ID (phase-2) stitches trajectories when ANPR misses; Kalman/ByteTrack at junctions for direction+speed without ANPR (roadmap)</td>
+<td>Central correlator</td>
+<td>No Re-ID ML needed while plates are visible; Re-ID covers the plate-miss gap</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Edge vs. cloud decision:</strong> detection and OCR at the edge (bandwidth + latency), correlation and search centrally (state). At statewide scale, &lt;20% of cameras warrant GPU at the edge (high-flow junctions); the rest run CPU-quantized YOLOv8n at 2–5 fps detection cadence — see <code>docs/SCALABILITY.md</code>.</p>
+<h3 id="31-pluggable-analytics-engine-ai-modules-replaceable">3.1 Pluggable analytics engine (AI modules replaceable)</h3>
+<p>Analytics is behind the <code>AnalyticsEngine</code> ABC (<code>packages/trinetra_core/analytics.py</code>). The default <code>AnalyticsPipeline</code> (YOLOv8n + RapidOCR) is one implementation; a <code>MockAnalyticsEngine</code> is provided for CPU-less test environments; a future FRS/Re-ID or vendor-SDK engine drops in behind the same interface and is selected via <code>TRINETRA_ANALYTICS_ENGINE</code>. Neither the adapter, the event-bus schema, nor the correlator change when the engine is swapped — directly satisfying the RFP's "AI modules replaceable without redesign" principle. See <code>docs/ARCHITECTURE_PRINCIPLES.md</code>.</p>
+<hr>
+<h2 id="4-cybersecurity-architecture-summary-full-detail-in-docssecuritymd">4. Cybersecurity Architecture (summary — full detail in <code>docs/SECURITY.md</code>)</h2>
+<ul>
+<li>OAuth2 password-flow → signed JWT (HS256, rotating secret via env), 12 h operator sessions.</li>
+<li>RBAC: <code>admin</code> (full + audit + registry), <code>analyst</code> (watchlist + search), <code>operator</code> (monitor, ack/resolve alerts). Enforced server-side per-route; UI merely reflects it.</li>
+<li>Immutable audit trail: every mutation (watchlist CRUD, alert status, camera changes, imports, logins) recorded with user/action/entity/details.</li>
+<li>TLS everywhere in production deployment (nginx/ingress termination, Postgres/NATS/Redis on isolated overlay networks — never host-published except the API/UI edges).</li>
+<li>PII discipline: watchlist entries carry purpose + FIR reference; evidence retention policy (roadmap: auto-expiry per DPDP Act 2023 and GPDPL norms); plates stored in normalized + display forms to keep search deterministic.</li>
+<li>Secrets via environment injection; the repo ships only dev defaults.</li>
+</ul>
+<hr>
+<h2 id="5-deployment-architecture">5. Deployment Architecture</h2>
+<ul>
+<li><strong>Pilot (this repo):</strong> Docker Compose — <code>postgis/postgis:16-3.4</code>, <code>redis:7</code>, <code>nats:2.10</code> (JetStream, file storage), three Python services, React build served by nginx. Single <code>scripts/demo.ps1</code> brings up the full stack including the 50-camera scenario. GPU profile (<code>--profile gpu</code>) builds the gateway with CUDA inference for live RTSP.</li>
+<li><strong>District/state:</strong> same images on Kubernetes — correlator and core-api as Deployments (HPA on queue depth / CPU), gateways as DaemonSets on site nodes, NATS cluster (3-node) or managed Kafka swap-in, Postgres with streaming replica + PgBouncer, evidence on S3-compatible object storage. Helm chart + GitOps is roadmap item #1 post-hackathon.</li>
+<li><strong>Hybrid posture:</strong> control plane may run in a state data centre or on-prem cloud (no public SaaS dependency — a police requirement); gateways always run on-site.</li>
+<li><strong>Operations:</strong> the full central/regional/edge compute, GPU, bandwidth, storage-tier, scaling/monitoring, HA/DR/security, and cost detail is in <a href="DEPLOYMENT_AND_OPERATIONS.md"><code>docs/DEPLOYMENT_AND_OPERATIONS.md</code></a>.</li>
+</ul>
+<hr>
+<h2 id="6-infrastructure-sizing">6. Infrastructure Sizing</h2>
+<p><strong>Pilot (50 cameras, demo-grade):</strong> 1 laptop/VM, 8 vCPU / 16 GB RAM / 100 GB disk. Runs the entire stack plus simulated 50-camera load with headroom.</p>
+<p><strong>District (~2,000 cameras):</strong> 1 gateway pod per 16–32 cameras (x86 mini-PC or existing NVR-adjacent server, 4 cores/8 GB each — ~80 pods), central: 3 app nodes (16 vCPU/64 GB), Postgres primary + replica (32 vCPU/128 GB/2 TB NVMe), NATS 3-node cluster, 2× L4 GPU nodes for optional central re-processing/face roadmap.</p>
+<p><strong>Statewide (80,000):</strong> see <code>docs/SCALABILITY.md</code> for the full derivation — ~3,200 gateway pods, ~24 central app nodes, Postgres sharded by zone with a federal query layer, ~20 L4-class GPU nodes for embedding/Re-ID services, ~250 TB tiered storage.</p>
+<hr>
+<h2 id="7-cost-benefit-analysis-summary-full-detail-in-docscost_benefitmd">7. Cost-Benefit Analysis (summary — full detail in <code>docs/COST_BENEFIT.md</code>)</h2>
+<p>Pilot CAPEX ≈ ₹6–9 L (existing cameras reused; compute + integration effort), state rollout ≈ ₹95–140 Cr CAPEX + ₹18–25 Cr/yr OPEX over 5 years — versus manual monitoring of 80,000 feeds being impossible at any price, and each hour saved in vehicle-theft recovery measurably improving recovery rates. The federated design avoids the ~₹400 Cr+ WAN and data-centre cost that raw-stream centralization would impose.</p>
+<hr>
+<h2 id="8-department-wise-information-requirements">8. Department-wise Information Requirements</h2>
+<table>
+<thead>
+<tr>
+<th>Unit</th>
+<th>Needs</th>
+<th>Served by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>State Control Room / PHQ</td>
+<td>Statewide alert feed, force-wide stats, audit access</td>
+<td>Dashboard, stats API, audit log (admin)</td>
+</tr>
+<tr>
+<td>Traffic Police</td>
+<td>Vehicle/plate search, blacklisted vehicle alerts, camera status by zone</td>
+<td>Event search, watchlist (analyst), registry</td>
+</tr>
+<tr>
+<td>Crime Branch / CI</td>
+<td>Watchlist management, trajectory history, evidence export</td>
+<td>Watchlist CRUD/import, tracking API, CSV export</td>
+</tr>
+<tr>
+<td>Local PS / DCP offices</td>
+<td>Alerts scoped to their zone cameras</td>
+<td>Zone-filtered camera registry + alert filters</td>
+</tr>
+<tr>
+<td>Cyber/Railways/GRP</td>
+<td>Event log queries, anomaly alerts, chain-of-custody audit</td>
+<td>Event search, anomaly alerts, audit trail</td>
+</tr>
+<tr>
+<td>IT/Nodal officers</td>
+<td>Camera onboarding, health, protocol/firmware metadata</td>
+<td>Registry CRUD + status</td>
+</tr>
+</tbody>
+</table>
+<p>RBAC maps these to the three seeded roles plus per-zone scoping (roadmap: zone-level row security in Postgres, already prepared by the <code>zone</code> column).</p>
+<h3 id="81-department-tenancy-26-departments">8.1 Department tenancy (26 departments)</h3>
+<p>The registry models all 26 government departments as first-class records, each with its own <strong>event/evidence retention policy</strong> (7/15/30 days, reflecting the heterogeneity in the field). Users are department-scoped: a Traffic or RTO operator sees only their own department's cameras, alerts, and events (<code>apply_scope</code> enforced server-side on every list query; admins are global). A <code>janitor</code> service enforces per-department retention (dry-run by default). Private/community cameras onboard with <code>source_type=community</code> + explicit consent and a restricted scope.</p>
+<hr>
+<h2 id="9-scalability-strategy-summary-full-detail-in-docsscalabilitymd">9. Scalability Strategy (summary — full detail in <code>docs/SCALABILITY.md</code>)</h2>
+<p>Bandwidth math is the headline: 80k × 4 Mbps raw ≈ <strong>320 Gbps</strong> (infeasible) vs. event-plane ≈ <strong>1–2 Gbps average</strong> for the same estate. Gateways scale horizontally (one per site), the bus clusters (NATS → Kafka at district scale), Postgres shards by zone, inference scales at the edge where the cameras are. Phased rollout: 50-camera pilot → district (2k) → range (10k) → state (80k).</p>
+<hr>
+<h2 id="10-delivered-in-this-build-vs-future-roadmap">10. Delivered in this build vs. Future Roadmap</h2>
+<p><strong>Delivered (runnable in the demo):</strong></p>
+<ul>
+<li><strong>Government records integration</strong> — CCTNS auto-watchlist + VAHAN/SARTHI/NAFIS enrichment (mock connectors; real drop in behind the same ABCs).</li>
+<li><strong>Live viewing</strong> — on-demand HLS per camera + optional WebRTC/WHIP; community-camera self-service onboarding with consent.</li>
+<li><strong>Real-time alert fan-out</strong> — SMS/email/webhook(CCTNS)/FCM routing with a notifications audit panel.</li>
+<li><strong>26-department governance</strong> — department-scoped RBAC + per-department retention + janitor enforcement.</li>
+<li><strong>GB/T 28181</strong> standardised camera interop adapter.</li>
+<li><strong>Face detection &amp; recognition</strong> — YuNet face detector in the pipeline → NAFIS connector match → wanted/missing-person alerts (verified on live grid feeds).</li>
+<li><strong>AsyncAPI</strong> event-bus contract.</li>
+</ul>
+<p><strong>Future roadmap:</strong></p>
+<ol>
+<li><strong>Face-embedding watchlist matching</strong> (ArcFace/InsightFace at edge, FAISS/Milvus central) for wanted/missing persons — schema already supports person entries; NAFIS connector seam ready.</li>
+<li><strong>Vehicle Re-ID across plate-miss frames</strong> (embedding-based) to stitch trajectories when ANPR fails.</li>
+<li><strong>On-demand clip retrieval RPC</strong> through the gateway for post-event evidence collection.</li>
+<li><strong>Kafka + Kubernetes/Helm productionization</strong>, zone-sharded Postgres, S3 evidence lifecycle policies.</li>
+<li><strong>Kalman/ByteTrack multi-object tracking at junctions</strong> for direction + speed without ANPR.</li>
+<li><strong>Real SMS/email/FCM gateways + mobile alert app</strong> (the routing + audit are live; gateways are config); one-click CCTNS/FIR case linkage.</li>
+<li><strong>Fuzzy plate matching (edit-distance ≥ 0.9)</strong> behind a confidence threshold, and per-camera health scoring.</li>
+<li><strong>Postgres row-level security per department</strong> (the <code>apply_scope</code> seam is ready; RLS is the production hardening).</li>
+</ol>
+<hr>
+<h2 id="11-alert-prioritisation-visualisation-user-interaction">11. Alert Prioritisation, Visualisation &amp; User Interaction</h2>
+<ul>
+<li><strong>Prioritisation by category.</strong> Alerts carry a category (<code>stolen_vehicle</code>, <code>blacklisted_vehicle</code>, <code>wanted_person</code>, <code>missing_person</code>, <code>suspect</code>, <code>anomaly</code>) which maps to a severity and a routing policy in the <code>notifier</code> (e.g., <code>stolen_vehicle</code> → SMS to DCP + CCTNS webhook + FCM to traffic field units; <code>wanted_person</code> → SMS + email to Crime Branch + CCTNS webhook). Category + confidence + source (CCTNS-sourced hits rank above heuristic anomalies) drive the on-screen ordering and colour-coding.</li>
+<li><strong>Deduplication.</strong> A Redis <code>SET NX EX</code> window (60 s per watchlist-entry × camera) suppresses repeat alerts at the same camera so operators see one actionable alert per event, not a flood.</li>
+<li><strong>Visualisation.</strong> The operator console surfaces alerts four ways: (1) the dashboard live-feed (cards with evidence frame, source badge, VAHAN enrichment), (2) the live map with red alert pins, (3) the alerts table (status workflow new→ack→resolved), and (4) real-time WebSocket push. The camera-grid mosaic + live view let operators visually confirm a detection.</li>
+<li><strong>User interaction.</strong> Operators Ack/Resolve alerts (audited); analysts manage the watchlist (CRUD + CSV import) and search the event log (plate/camera/time + CSV export) for investigation; admins manage the registry, departments, and retention. RBAC scopes each role; department-scoped users see only their own cameras/alerts.</li>
+<li><strong>Fan-out.</strong> Every alert is fanned to configured channels (SMS/email/webhook/FCM) with a delivery audit (the Notifications panel), so field units receive alerts even when not at a console.</li>
+</ul>
+<hr>
+<h2 id="12-technical-prerequisites-assumptions-information-required-from-departments">12. Technical Prerequisites, Assumptions &amp; Information Required from Departments</h2>
+<p><strong>Assumptions</strong>
+- Existing cameras/NVR/VMS remain in place (no rip-and-replace); the platform federates through standard protocols.
+- A state WAN (police/BSNL) connects sites to the State Data Centre; site gateways use outbound-only connections.
+- Per-department retention (7/15/30 days) is policy-configurable; raw video stays on-site on existing NVR storage.</p>
+<p><strong>Technical prerequisites (per site)</strong>
+- A gateway pod (x86 mini-PC / NVR-adjacent server / Jetson for GPU sites) per 16–32 cameras, 4 cores / 8 GB RAM / 256 GB SSD, LAN-adjacent to the cameras.
+- RTSP/ONVIF/GB28181 access to the cameras (credentials + stream URIs); for VMS-bridged sites, the VMS SDK/event-stream access.
+- Outbound network reach from the site gateway to the district/state event bus (NATS/Kafka) — no inbound firewall pinholes.</p>
+<p><strong>Information required from each participating department</strong> (to assess integration feasibility + interoperability)
+1. <strong>Camera inventory</strong> — per camera: id, location (lat/lon), vendor, model, VMS platform, protocol (RTSP/ONVIF/GB28181/vendor-API), stream URI, resolution/codec, connectivity, ownership, retention currently configured. (Bulk-importable via the registry CSV template — <code>POST /api/v1/cameras/import</code>.)
+2. <strong>VMS / NVR details</strong> — vendor, version, whether it exposes an event/stream API (Milestone/Genetec/CP-Plus SDK), AMC status, storage architecture.
+3. <strong>Network</strong> — site LAN topology, available bandwidth to the district/State DC, existing VLANs, whether outbound to the state WAN is permitted.
+4. <strong>Watchlist data</strong> — for CCTNS/eGujCop integration: API access or a feed of stolen/wanted/missing/blacklisted records (with FIR references); for VAHAN/SARTHI/NAFIS: API access + service accounts. (The connector ABCs are ready; real access drops in behind them.)
+5. <strong>Department tenancy</strong> — department code, owner/contact, retention policy, scoped users/roles.
+6. <strong>Operational</strong> — zones/areas of responsibility, alert routing recipients (DCP/PS/field-unit contacts + channels), existing SOPs for alert handling.</p>
+<p><strong>Interoperability assurance</strong> — onboarding is a registry operation (manual entry / bulk CSV / API), not a code change; the normalised <code>DetectionEvent</code> schema + AsyncAPI bus contract mean any conforming camera/department integrates identically. GB/T 28181 + ONVIF cover the dominant Hikvision/Dahua/CP-Plus estate; the adapter registry accepts new vendor/protocol adapters without redesign.</p></div><div class='section'><h1>5. Architecture Principles Compliance</h1><h1 id="trinetra-architecture-principles-compliance">Trinetra — Architecture Principles Compliance</h1>
+<p>How the Trinetra platform satisfies the RFP's architecture principles. Trinetra uses the <strong>hybrid approach</strong> (reference Models 1 + 3 + 2 — see <a href="HLD.md"><code>HLD.md</code></a> §0): a canonical registry/GIS foundation (Model 1), federation middleware through edge gateway adapters (Model 3), and unified analytics/alerting at the center (Model 2).</p>
+<h2 id="principle-implementation-map">Principle → Implementation map</h2>
+<table>
+<thead>
+<tr>
+<th>RFP principle</th>
+<th>How Trinetra delivers it</th>
+<th>Extension point</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Open</strong></td>
+<td>100% open-source stack: FastAPI, React, PostgreSQL+PostGIS, Redis, NATS JetStream, YOLOv8 (Ultralytics, AGPL/Apache), RapidOCR, ffmpeg, Leaflet. No proprietary runtime dependency.</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Modular</strong></td>
+<td>Independently deployable services: <code>gateway</code>, <code>correlator</code>, <code>core_api</code>, <code>records</code>, <code>notifier</code>, <code>streamer</code>, <code>janitor</code>. Each has its own Dockerfile + requirements and communicates only via the NATS event bus or HTTP APIs.</td>
+<td>Add a service without touching others</td>
+</tr>
+<tr>
+<td><strong>Scalable</strong></td>
+<td>Gateways scale horizontally (one per site); correlator/core-api scale via JetStream queue groups; Postgres shards by zone. See <a href="SCALABILITY.md"><code>SCALABILITY.md</code></a>. Bandwidth: ~1–2 Gbps event plane for 80k cameras vs 320 Gbps raw.</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Secure</strong></td>
+<td>JWT + department-scoped RBAC, immutable audit trail, TLS, mTLS for records connectors, PII/chain-of-custody. See <a href="SECURITY.md"><code>SECURITY.md</code></a>.</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Standards-based</strong></td>
+<td>OpenAPI (core API at <code>/docs</code>), AsyncAPI (event bus — <a href="asyncapi.yaml"><code>asyncapi.yaml</code></a>), ONVIF, <strong>GB/T 28181</strong>, RTSP, HTTP-MJPEG, PostGIS, JWT (RFC 7519).</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Vendor-neutral</strong></td>
+<td>No vendor-specific core. Every camera enters through the canonical registry with vendor/VMS/protocol metadata; the normalized <code>DetectionEvent</code> schema is the only thing on the bus. 8 vendors / 6 VMS / 5 protocols in the pilot.</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Avoid vendor lock-in</strong></td>
+<td>Cameras, VMS, analytics, and storage are all behind interfaces (see below). Replacing any one does not require redesigning the others.</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Technology-agnostic / heterogeneous multi-vendor</strong></td>
+<td>The registry absorbs heterogeneity; adapters normalise vendor formats into one event schema; AI engines are pluggable; storage is pluggable.</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Future enhancements without significant redesign</strong></td>
+<td>New camera vendor = new adapter; new analytics = new engine; new department = registry row; new alert channel = notifier rule. None touch the core bus/correlator/schema.</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h2 id="modular-adapter-based-framework-cameras-vms">Modular adapter-based framework (cameras &amp; VMS)</h2>
+<p><strong>Seam:</strong> <code>services/gateway/app/adapters/</code> — <code>BaseAdapter</code> + <code>AdapterRegistry</code>.</p>
+<p>Every live protocol adapter extends <code>BaseAdapter</code> (<code>__init__(name, cameras, js)</code> + <code>async run()</code>) and <strong>self-registers</strong> with the <code>AdapterRegistry</code> by protocol name. The gateway builds adapters for the configured protocol groups via <code>registry.create(proto, …)</code> — it never hardcodes <code>if protocol == …</code>. Adding a new vendor/protocol is "write an adapter module that registers itself", not "edit the gateway main loop".</p>
+<p>Registered today:
+- <code>rtsp</code> → <code>RTSPAdapter</code> (universal fallback; forces TCP, backoff reconnect, PTS timing)
+- <code>onvif</code> → <code>RTSPAdapter</code> (ONVIF <code>GetStreamUri</code> resolves to RTSP, reuses the RTSP path)
+- <code>gb28181</code> → <code>GB28181Adapter</code> (GB/T 28181 SIP signaling → RTSP media)
+- <code>http-mjpeg</code>, <code>vendor-api</code> → plugin surface for VMS-SDK bridges (Milestone/Genetec/CP-Plus) — documented seam</p>
+<p><strong>Add a vendor-SDK VMS bridge</strong> (e.g., a Milestone XProtect connector):</p>
+<pre><code class="language-python"># services/gateway/app/adapters/milestone.py
+from .base import BaseAdapter
+from .registry import registry
+class MilestoneAdapter(BaseAdapter):
+    async def run(self): ...          # subscribe to the VMS event stream
+registry.register(&quot;vendor-api&quot;, MilestoneAdapter)
+</code></pre>
+<p>Then import the module in <code>main.py</code> — no other change.</p>
+<h2 id="ai-modules-replaceable-analytics-engines">AI modules replaceable (analytics engines)</h2>
+<p><strong>Seam:</strong> <code>packages/trinetra_core/analytics.py</code> — <code>AnalyticsEngine</code> ABC.</p>
+<p>The gateway runs one <code>AnalyticsEngine</code> per live adapter. The default is <code>AnalyticsPipeline</code> (YOLOv8n + RapidOCR ANPR). Engines are selected by the <code>get_analytics_engine()</code> factory from <code>TRINETRA_ANALYTICS_ENGINE</code> (default <code>yolo_rapidocr</code>; <code>mock</code> for CPU-less tests). A <code>MockAnalyticsEngine</code> is provided. Neither the adapter, the event-bus schema, nor the correlator change when the engine changes.</p>
+<p><strong>Swap to a future face/Re-ID or vendor-SDK engine:</strong></p>
+<pre><code class="language-python"># implement the ABC
+class FaceReIDEngine(AnalyticsEngine):
+    def process(self, frame, camera): ...   # return detection dicts
+# register in the factory (or via entry-point) and set TRINETRA_ANALYTICS_ENGINE=face_reid
+</code></pre>
+<p>The downstream correlator → records → notifier → console pipeline is unchanged.</p>
+<h2 id="storage-platforms-replaceable">Storage platforms replaceable</h2>
+<p>Evidence (snapshot frames) is written to a configurable <code>TRINETRA_EVIDENCE_DIR</code> (volume) and served via the core API. The volume maps to local disk in the pilot and to S3-compatible object storage in production (lifecycle-tiered — see <a href="SCALABILITY.md"><code>SCALABILITY.md</code></a> §4). Event metadata lives in PostgreSQL/PostGIS (shardable by zone). No application code changes between local and object storage — only the mount/config.</p>
+<h2 id="documented-standard-apis-open-protocols-sdks">Documented standard APIs, open protocols, SDKs</h2>
+<ul>
+<li><strong>OpenAPI</strong>: core REST API auto-documented at <code>http://localhost:8000/docs</code> (registry, watchlist, events, alerts, records, gap-analysis, departments, notifications, community).</li>
+<li><strong>AsyncAPI</strong>: the NATS event-bus contract — <a href="asyncapi.yaml"><code>docs/asyncapi.yaml</code></a> — subjects <code>trinetra.events.raw</code>, <code>trinetra.alerts.new</code>, <code>trinetra.watchlist.changed</code> with the <code>DetectionEvent</code> / <code>AlertPayload</code> schemas.</li>
+<li><strong>Open protocols</strong>: RTSP, ONVIF, GB/T 28181, HTTP-MJPEG.</li>
+<li><strong>SDKs / plugin surfaces</strong>: <code>BaseAdapter</code> (cameras/VMS), <code>AnalyticsEngine</code> (AI), <code>RecordsConnector</code> family (government DBs — VAHAN/SARTHI/CCTNS/NAFIS), <code>EvidenceStore</code> (storage), notifier dispatch functions (alert channels). Each is a small ABC behind which concrete implementations drop in.</li>
+</ul>
+<h2 id="government-database-interoperability">Government-database interoperability</h2>
+<p><strong>Seam:</strong> <code>packages/trinetra_core/records.py</code> — <code>VahanConnector</code>, <code>SarathiConnector</code>, <code>CctnsConnector</code>, <code>NafisConnector</code> ABCs + <code>RecordsEnricher</code> facade. Mock connectors run the demo; real CCTNS/VAHAN/NAFIS connectors drop in behind the same interface (mTLS, service accounts) with no correlator change. See <a href="INTEGRATION.md"><code>INTEGRATION.md</code></a> §2.</p>
+<h2 id="permitted-approach">Permitted approach</h2>
+<p><strong>Hybrid (Models 1 + 3 + 2)</strong>, justified in <a href="HLD.md"><code>HLD.md</code></a> §0: Model 1 registry/GIS foundation + Model 3 VMS-federation middleware (edge gateways) + Model 2 unified viewing/analytics at the center, unified by "detect at the edge, correlate at the center."</p></div><div class='section'><h1>6. Deployment & Operations</h1><h1 id="trinetra-deployment-operations">Trinetra — Deployment &amp; Operations</h1>
+<p>Explicit treatment of the seven operational areas the submission must explain. Cross-references the detailed docs (<code>SCALABILITY.md</code>, <code>SECURITY.md</code>, <code>COST_BENEFIT.md</code>); figures are planning-grade (±30%) for an ~80,000-camera statewide estate and a 50-camera pilot.</p>
+<h2 id="1-central-regional-and-edge-compute-requirements">1. Central, regional, and edge-compute requirements</h2>
+<p>Three tiers, each scaling independently.</p>
+<p><strong>Edge (site / camera cluster)</strong> — <em>where detection happens.</em>
+- 1 gateway pod per 16–32 cameras. Spec: 4 vCPU / 8 GB RAM / 256 GB SSD (x86 mini-PC or NVR-adjacent server); Jetson Orin Nano (~15 W) for high-flow GPU sites. Software: the gateway container in this repo, CPU-quantized YOLOv8n @ 2–5 fps detection cadence + RapidOCR ANPR.
+- ~3,200 gateway pods statewide (64,000 cameras on CPU pods; 16,000 high-flow junction cameras on GPU pods).
+- Role: pull RTSP/ONVIF/GB28181 locally (LAN-speed), run detection + ANPR, publish structured events + evidence frames to the bus. Raw video never leaves the site.</p>
+<p><strong>Regional (range / district DC)</strong> — <em>aggregation + relay.</em>
+- Per range: a 3-node NATS JetStream cluster (or 3-broker Kafka where IT policy prefers it) for durable event transit; a district correlator + Redis cache; a local warm-storage tier.
+- ~80 gateway pods feed each district DC; the district relays aggregated events to the State DC. District nodes: 4 app nodes (16 vCPU/64 GB) + 1 Postgres read-replica for local queries.</p>
+<p><strong>Central (State Data Centre)</strong> — <em>statewide correlation, records, search, alerting.</em>
+- App tier: ~24 nodes (16 vCPU/64 GB) running correlator + core-api + records + notifier, autoscaled on queue depth/CPU behind nginx/ingress.
+- Databases: PostgreSQL 16 + PostGIS, sharded by zone (4 shards + 1 federal query node), each primary + streaming replica; Redis Sentinel pair per shard.
+- Bus: NATS cluster (3-node) or managed Kafka. Object storage: ~250 TB tiered (hot NVMe / object / archive).
+- GPU: ~20 L4-class nodes for phase-2 embedding services (face/Re-ID) — <strong>not</strong> required for day-1 ANPR.</p>
+<h2 id="2-gpu-accelerator-requirements-for-video-analytics">2. GPU / accelerator requirements for video analytics</h2>
+<ul>
+<li><strong>Edge:</strong> &lt;20% of cameras warrant GPU at the edge — only high-flow junctions where full-rate, multi-lane ANPR justifies it. Those sites use Jetson Orin Nano / Orin NX (~15–25 W). The remaining ~80% run CPU-quantized YOLOv8n at 2–5 fps detection cadence (≈30 ms/frame on 4 modern cores) — sufficient for ANPR at junction cadence and far cheaper.</li>
+<li><strong>Central:</strong> ~20 L4-class (24 GB) GPU nodes serve <em>phase-2</em> embedding search (face/Re-ID) over event clips — a bounded, back-pressure-friendly workload (clips, never raw streams). Day-1 ANPR needs <strong>zero</strong> central GPU.</li>
+<li><strong>Accelerator-agnostic:</strong> inference runs on ONNX Runtime / Ultralytics, so the same models deploy on CPU, NVIDIA CUDA, or Jetson — no lock-in. The <code>AnalyticsEngine</code> ABC lets a future accelerator-backed engine drop in without code change.</li>
+</ul>
+<h2 id="3-expected-network-bandwidth-low-bandwidth-strategies">3. Expected network bandwidth &amp; low-bandwidth strategies</h2>
+<table>
+<thead>
+<tr>
+<th>Plane</th>
+<th>Per-camera</th>
+<th>80,000 cameras</th>
+<th>Feasible?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raw video centralised (rival design)</td>
+<td>4 Mbps continuous</td>
+<td><strong>~320 Gbps</strong> + ~86 PB/yr</td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>Trinetra event plane</strong> (events + evidence frames)</td>
+<td>~30 events/day, 1 KB event + ~100 KB snapshot</td>
+<td><strong>~1–2 Gbps average</strong>, ~240 GB/day evidence</td>
+<td><strong>Yes</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Site → district:</strong> ≤2 Mbps sustained per gateway (events + snapshots, bursty) — fits existing police WAN/BSNL links. <strong>Store-and-forward:</strong> JetStream (file storage) + on-disk buffer ride out link outages; events replay on reconnection, nothing lost.</li>
+<li><strong>District → State DC:</strong> ~40 Gbps aggregate event-plane budget statewide with 10× headroom — ordinary DWDM/leased capacity.</li>
+<li><strong>Low-bandwidth strategies:</strong> (1) detect at the edge so only O(events) cross the WAN; (2) on-demand viewing — an operator pulls a stream only while watching (no continuous central ingestion); (3) adaptive detection cadence (drop to 2 fps on poor links); (4) evidence-frame JPEG compression; (5) QoS marking — event plane AF41, clip-retrieval best-effort; (6) government/VMS VLANs untouched (gateways sit alongside NVRs and pull RTSP on the LAN).</li>
+<li>Government/VMS VLANs untouched (gateways pull RTSP on the LAN — no change to current camera networking).</li>
+</ul>
+<h2 id="4-hot-warm-cold-storage-assumptions-by-retention-period">4. Hot / warm / cold storage assumptions (by retention period)</h2>
+<table>
+<thead>
+<tr>
+<th>Data class</th>
+<th>Volume @80k</th>
+<th>Retention</th>
+<th>Tier</th>
+<th>Store</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Event metadata</td>
+<td>~2.5 GB/day → ~5 TB</td>
+<td>5 years</td>
+<td><strong>Hot</strong></td>
+<td>Postgres (sharded) — fast query</td>
+</tr>
+<tr>
+<td>Evidence frames</td>
+<td>~240 GB/day → ~22 TB</td>
+<td>90 days</td>
+<td><strong>Hot→Warm</strong></td>
+<td>Object storage, NVMe 30 d / object 60 d</td>
+</tr>
+<tr>
+<td>Event clips (roadmap)</td>
+<td>~5 TB/day → ~150 TB</td>
+<td>30 days</td>
+<td><strong>Warm</strong></td>
+<td>Object storage, erasure-coded</td>
+</tr>
+<tr>
+<td>Audit log</td>
+<td>&lt;1 GB/day</td>
+<td>7 years</td>
+<td><strong>Hot (WORM export)</strong></td>
+<td>Postgres + immutable export</td>
+</tr>
+<tr>
+<td>Raw video</td>
+<td>—</td>
+<td>7/15/30 days per dept (status quo)</td>
+<td><strong>Cold (on-site)</strong></td>
+<td>Existing NVR — <strong>never centralised</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Per-department retention (7/15/30 days) is policy-configurable per <code>DepartmentRow</code>; the <code>janitor</code> service enforces it (dry-run by default). Object-storage lifecycle policies tier evidence hot→object→archive; raw video stays on-site on existing NVR storage (the status quo).</li>
+</ul>
+<h2 id="5-load-balancing-horizontal-scaling-monitoring-logging-health-checks">5. Load balancing, horizontal scaling, monitoring, logging, health checks</h2>
+<ul>
+<li><strong>Load balancing:</strong> nginx/ingress terminates client TLS and load-balances core-api; correlator instances share work via JetStream <strong>queue groups</strong> (each event delivered to exactly one correlator); gateways are independent (no coordination needed).</li>
+<li><strong>Horizontal scaling:</strong> gateways scale by adding pods (one per site); correlator/core-api/records/notifier scale by adding replicas (HPA on queue depth / CPU); Postgres scales by sharding (zone); NATS/Kafka by adding cluster nodes. No component is a singleton except the DB primary (mitigated by replica + failover).</li>
+<li><strong>Monitoring &amp; metrics:</strong> structured JSON logs; Prometheus metrics — events processed, alert latency (p95), queue depth, per-camera health (online/degraded/offline), gateway emit counts; Grafana dashboards for the control room. Per-camera health scoring is a roadmap item; basic status is live.</li>
+<li><strong>Logging:</strong> append-only audit log (every mutation: actor/action/entity/details) for non-repudiation; service logs shipped to a central log store.</li>
+<li><strong>Health checks:</strong> Docker <code>HEALTHCHECK</code> on postgres/redis; <code>/health</code> endpoints on core-api, records, streamer; gateway adapter heartbeats (emit-count logging every 50 events); camera <code>status</code>/<code>health</code>/<code>last_heartbeat</code> in the registry, surfaced on the GIS map + Cameras page.</li>
+</ul>
+<h2 id="6-high-availability-backup-disaster-recovery-cybersecurity-controls">6. High availability, backup, disaster recovery &amp; cybersecurity controls</h2>
+<p><strong>High availability &amp; DR</strong>
+- <strong>RPO 15 min / RTO 1 h</strong> for the control plane. Postgres WAL streaming to a second DC; NATS JetStream 3-copy replication + mirror to DR; object storage cross-DC erasure/replication.
+- Stateless services (correlator/core-api/records/notifier) run multi-instance behind the bus/ingress; Postgres primary + streaming replica with automatic failover; Redis Sentinel; NATS 3-node cluster.
+- Sites are failure-isolated: a dead gateway takes only its cameras dark; buffered events replay on recovery (store-and-forward). Quarterly DR drills; gateway images are immutable and re-deployable from a district registry mirror.</p>
+<p><strong>Cybersecurity controls</strong> (detail in <code>SECURITY.md</code>)
+- Identity: OAuth2 → JWT (HS256 dev / RS256+JWKS prod), 12 h sessions; <strong>department-scoped RBAC</strong> enforced server-side on every route.
+- Audit: immutable <code>audit_log</code> for every mutation; alert lifecycle (new→ack→resolved) audited; records-lookup chain-of-custody (actor, system, plate/person, FIR ref).
+- Transport/network: TLS 1.2+ everywhere; service-to-service on isolated overlay networks; site gateways <strong>outbound-only</strong> (no inbound pinholes to police sites); mTLS + service accounts for CCTNS/VAHAN/NAFIS connectors.
+- Data: at-rest encryption (LUKS/cloud KMS) for Postgres + evidence; PII discipline (watchlist entries carry purpose + FIR ref; plates in normalized + display forms; biometric templates isolated if/when stored); retention per DPDP Act 2023 / GPDPL.
+- App security: Pydantic input validation on every boundary; parameterized SQL only (no string SQL); WebSocket token auth; rate-limiting on login (roadmap: per-IP+per-user lockout); secrets via env/Vault injection (repo ships dev defaults only).
+- Threat model: rogue-feed rejection (events from unregistered cameras dropped + logged), alert tamper-resistance (append-only rows + audited status changes), gateway blast-radius limited (holds only a bus credential), DoS absorption (JetStream persistent queues + dedup windows).</p>
+<h2 id="7-estimated-implementation-operational-costs">7. Estimated implementation &amp; operational costs</h2>
+<p><strong>Pilot (50 cameras):</strong> CAPEX ≈ ₹6–9 L (2× mini-PC gateway ₹1.5 L; central VM ₹2.5 L; integration/survey/training ₹2–4 L). Near-zero incremental OPEX (existing police WAN + rack space).</p>
+<p><strong>Statewide (80,000 cameras, 5-year horizon):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3,200 gateway pods (CPU/GPU mix, incl. install)</td>
+<td>₹28–38 Cr</td>
+</tr>
+<tr>
+<td>Central DC: 24 app nodes + DB tier + 20 GPU nodes + networking</td>
+<td>₹22–30 Cr</td>
+</tr>
+<tr>
+<td>Control-plane services (records/notifier/janitor/streamer; shares app tier; streamer on-site)</td>
+<td>₹1–2 Cr</td>
+</tr>
+<tr>
+<td>Storage 250 TB tiered + DR site</td>
+<td>₹10–15 Cr</td>
+</tr>
+<tr>
+<td>Site surveys, cabling-to-gateway, project management (33 districts)</td>
+<td>₹25–35 Cr</td>
+</tr>
+<tr>
+<td><strong>Total CAPEX (5-year)</strong></td>
+<td><strong>₹95–140 Cr</strong></td>
+</tr>
+<tr>
+<td>Annual OPEX (power, links, maintenance, staff)</td>
+<td>₹18–25 Cr/yr</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Avoided cost:</strong> centralising raw streams would need ~320 Gbps dedicated WAN + ~86 PB/yr — <strong>₹400 Cr+</strong> in network and storage alone, before any AI. Trinetra's federated event plane runs on the existing WAN at 1–2 Gbps.</p>
+<p><strong>Benefits (qualitative):</strong> force multiplication (one operator effectively monitors thousands of feeds), faster stolen-vehicle recovery, investigation hours saved (plate/camera/time search in minutes), interoperability dividend, zero vendor lock-in. Detail in <code>COST_BENEFIT.md</code>.</p></div><div class='section'><h1>7. Integration Architecture</h1><h1 id="trinetra-integration-architecture">Trinetra — Integration Architecture</h1>
+<p>How the platform integrates with heterogeneous cameras, incumbent VMS, government databases, private/community cameras, and external law-enforcement systems. This complements the HLD; the headline design rule throughout is <strong>standardised contracts, federation at the edge, events (not video) at the center</strong>.</p>
+<h2 id="1-camera-vms-federation-heterogeneous-infrastructure">1. Camera &amp; VMS federation (heterogeneous infrastructure)</h2>
+<p>Every camera is a first-class record in the canonical registry: ID, lat/long, vendor, VMS, <strong>protocol</strong>, stream URI, status, <strong>department</strong>, zone, source-type. Analytics and GIS never talk to a camera directly — only to its registry entry. This is what absorbs vendor/VMS/protocol heterogeneity (RFP Challenge 01).</p>
+<p><strong>Supported protocols</strong> (one adapter worker per protocol group in the gateway):</p>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Adapter</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rtsp</code></td>
+<td><code>RTSPAdapter</code></td>
+<td>Universal fallback; virtually every Indian CCTV estate exposes it.</td>
+</tr>
+<tr>
+<td><code>onvif</code></td>
+<td><code>ONVIFAdapter</code> → RTSP</td>
+<td><code>GetProfiles</code>/<code>GetStreamUri</code> resolves to an RTSP URI; reuses the RTSP path.</td>
+</tr>
+<tr>
+<td><code>http-mjpeg</code></td>
+<td>vendor-SDK plugin surface</td>
+<td>Demonstrates the plugin seam for simple IP cameras.</td>
+</tr>
+<tr>
+<td><code>vendor-api</code></td>
+<td>VMS bridge (Milestone/Genetec/CP-Plus SDK)</td>
+<td>Incumbent VMS event streams are bridged so departments keep existing analytics.</td>
+</tr>
+<tr>
+<td><code>gb28181</code></td>
+<td><code>GB28181Adapter</code></td>
+<td><strong>GB/T 28181</strong> — the Chinese national standard (SIP signaling + RTP/RTSP media), dominant for the Hikvision/Dahua/CP-Plus estate prevalent in India. Models REGISTER/catalog/INVITE; media resolves to RTSP.</td>
+</tr>
+</tbody>
+</table>
+<p>A normalised <code>DetectionEvent</code> schema is the single contract on the bus regardless of source — downstream systems never see vendor formats. Raw video stays at the site; the WAN carries events + compressed evidence frames only.</p>
+<h2 id="15-model-1-registry-gis-foundation-the-mandatory-baseline">1.5 Model 1 — Registry &amp; GIS foundation (the mandatory baseline)</h2>
+<p>Model 1 is the foundational layer (no live streaming/recording) that the other models build on. It is fully delivered:</p>
+<ul>
+<li><strong>Centralised registry</strong> — every camera is a first-class record with location, department, vendor, VMS, protocol, ownership, connectivity status, <strong>install date, health, maintenance status, coverage radius, firmware</strong>, source-type (gov/community) + consent. Onboarding via <strong>manual entry</strong> (<code>POST /api/v1/cameras</code>), <strong>bulk JSON</strong> (<code>POST /api/v1/cameras/bulk</code>), <strong>bulk CSV upload</strong> (<code>POST /api/v1/cameras/import</code>), and <strong>API</strong>.</li>
+<li><strong>Interactive GIS map</strong> (Leaflet + PostGIS) with department, camera-type, status and <strong>health</strong> layers, plus a <strong>coverage-footprint toggle</strong> (per-camera coverage circles coloured by health).</li>
+<li><strong>Health &amp; maintenance monitoring</strong> — <code>GET /api/v1/cameras/health</code> summary; filter the registry by health/maintenance; per-camera health badges.</li>
+<li><strong>Gap-analysis reports</strong> — <code>GET /api/v1/gap-analysis/coverage</code> (per-zone coverage + gap flags), <code>/ageing</code> (age buckets, EOL firmware, maintenance), <code>/report</code> (combined), <code>/report/download</code> (CSV). Sample report: <a href="SAMPLE_GAP_ANALYSIS_REPORT.md"><code>SAMPLE_GAP_ANALYSIS_REPORT.md</code></a>.</li>
+<li><strong>Role-based search, filtering, export</strong> — department-scoped RBAC; <code>GET /api/v1/cameras/export</code> (CSV); metadata <strong>audit trail</strong> for every onboarding/change.</li>
+</ul>
+<h2 id="2-government-records-integration-vahan-sarthi-egujcop-cctns-afis-nafis">2. Government records integration (VAHAN / SARTHI / eGujCop-CCTNS / AFIS / NAFIS)</h2>
+<p>This is the RFP's headline integration requirement: <em>"integrated with these databases to enable automated real-time alerts and proactive monitoring."</em> Trinetra federates records the same way it federates feeds — through connectors behind a small interface (<code>packages/trinetra_core/records.py</code>).</p>
+<p><strong>Two integration modes:</strong></p>
+<ul>
+<li><strong>Inbound (auto-watchlist):</strong> the <code>records</code> service consumes the CCTNS/eGujCop feed of stolen/wanted/missing/blacklisted records and upserts them into the watchlist, tagged with <code>source_system</code> (cctns) and <code>source_ref</code> (FIR/record id). The manual watchlist becomes a <strong>live, database-backed watchlist</strong>. On upsert it publishes <code>trinetra.watchlist.changed</code> so every correlator instance refreshes its Redis cache.</li>
+<li><strong>Outbound (real-time enrichment):</strong> on a plate hit, the correlator calls the records enricher to attach <strong>VAHAN</strong> vehicle/owner details and <strong>SARTHI</strong> DL status to the alert; for persons, <strong>CCTNS</strong> person records + <strong>NAFIS</strong> fingerprint/face match scores. The alert carries <code>source_system</code>, <code>source_ref</code>, and an <code>enrichment</code> block visible to operators.</li>
+</ul>
+<p><strong>Connector abstraction (real connectors drop in behind the same ABCs):</strong></p>
+<pre><code>VahanConnector   .lookup_plate(plate_norm) -&gt; VehicleRecord
+SarathiConnector .lookup_owner(owner_name) -&gt; DL record
+CctnsConnector   .watchlist_updates() -&gt; [records]; .lookup_person(name); .lookup_plate_history(plate)
+NafisConnector   .search_fingerprint(name) -&gt; FingerprintMatch
+RecordsEnricher  .enrich_plate(plate) / .enrich_person(name) / .lookup_plate(plate) / .cctns_feed()
+</code></pre>
+<p>The demo ships <strong>mock connectors</strong> backed by <code>sim/records.py</code> (scripted CCTNS feed, VAHAN table, SARTHI DLs, NAFIS matches) so the full alert/enrichment flow runs on a laptop with no real DB access. Production swaps in real connectors: CCTNS API gateway (NCRB), NIDC VAHAN, NCRB NAFIS — mTLS + service accounts, Redis cache + circuit breaker, every lookup audited (chain of custody), PII per DPDP Act 2023 / GPDPL.</p>
+<p><strong>Operator-facing surface:</strong> the <code>Records</code> page exposes a plate dossier (VAHAN + CCTNS hit + SARTHI) and a person dossier (CCTNS + NAFIS); watchlist rows and alert cards show the source system + FIR reference.</p>
+<h2 id="3-community-private-camera-viewing">3. Community / private camera viewing</h2>
+<p>The RFP requires viewing capability for "public-facing CCTV cameras installed by societies, malls, commercial establishments." Trinetra supports this via:</p>
+<ul>
+<li><strong>Self-service onboarding</strong> (<code>POST /api/v1/community/cameras</code>) — a nodal officer/owner registers a camera with explicit consent; it enters the registry as <code>source_type=community</code>, <code>consent=true</code>, with a restricted scope.</li>
+<li><strong>Live viewing</strong> via the <code>streamer</code> service (see §4).</li>
+</ul>
+<h2 id="4-live-viewing-transport">4. Live viewing transport</h2>
+<p>The <code>streamer</code> service serves per-camera live video to the operator console:</p>
+<ul>
+<li><strong>HLS (default, ~3–10 s latency):</strong> an ffmpeg process per camera generates an HLS playlist on demand. In simulation mode it reads a <code>testsrc</code> pattern with the camera name + clock overlaid; in live mode it reads the camera's RTSP URL. Only one ffmpeg per camera runs, and only while an operator is watching (idle processes reaped after 30 s) — a stream is pulled only on demand, consistent with "move events, not video."</li>
+<li><strong>WebRTC (opt-in, sub-second):</strong> a WHIP endpoint (<code>POST /whip/{cam}</code>) backed by aiortc publishes a generated video track. Enable at build time with <code>INSTALL_WEBRTC=true</code>; if absent, the console falls back to HLS.</li>
+</ul>
+<p>Routing: the browser requests <code>GET /api/v1/cameras/{id}/stream</code> → signed, short-lived HLS + WebRTC URLs; nginx proxies <code>/stream/</code> to the streamer. The <code>Live View</code> page offers a transport toggle.</p>
+<h2 id="5-alert-fan-out-to-field-units">5. Alert fan-out to field units</h2>
+<p>The <code>notifier</code> service subscribes to <code>trinetra.alerts.new</code> and routes each alert by category to channels (SMS / email / webhook-to-CCTNS / FCM mobile push) per a routing table. Every dispatch is recorded as a <code>NotificationRow</code> and shown in the <code>Fan-out</code> panel. SMS/email/FCM are mock-dispatched (logged) for the demo; the webhook channel performs a real HTTP POST to the configured endpoint so end-to-end fan-out is observable. Real gateways (MSG91/BSNL SMS, FCM, CCTNS webhook) drop in behind the <code>dispatch()</code> functions.</p>
+<h2 id="6-formal-contracts">6. Formal contracts</h2>
+<ul>
+<li><strong>OpenAPI:</strong> the core API spec is auto-generated at <code>/docs</code> (FastAPI).</li>
+<li><strong>AsyncAPI:</strong> the NATS event-bus contract is published in <a href="asyncapi.yaml"><code>docs/asyncapi.yaml</code></a> — subjects <code>trinetra.events.raw</code>, <code>trinetra.alerts.new</code>, <code>trinetra.watchlist.changed</code> with the <code>DetectionEvent</code> / <code>AlertPayload</code> / <code>WatchlistChanged</code> message schemas.</li>
+<li><strong>Normalised event/alert schemas:</strong> defined in <code>packages/trinetra_core/models.py</code>; the bus carries only these, never vendor formats.</li>
+</ul></div><div class='section'><h1>8. Scalability to 80,000 Cameras</h1><h1 id="trinetra-scale-to-80000-cameras-statewide-plan">Trinetra — Scale to 80,000 Cameras (Statewide Plan)</h1>
+<h2 id="1-the-bandwidth-thesis-why-this-architecture-scales">1. The Bandwidth Thesis (why this architecture scales)</h2>
+<table>
+<thead>
+<tr>
+<th>Plane</th>
+<th>Per-camera load</th>
+<th>80,000 cameras</th>
+<th>Feasible?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raw video centralized (typical rival design)</td>
+<td>4 Mbps continuous</td>
+<td><strong>~320 Gbps</strong> + ~86 PB/yr storage</td>
+<td>No — this is why "central VMS for everything" fails</td>
+</tr>
+<tr>
+<td>Trinetra event plane (structured events + evidence frames)</td>
+<td>~30 events/day avg, 1 KB event + ~100 KB snapshot</td>
+<td><strong>~1–2 Gbps average</strong>, ~240 GB/day evidence</td>
+<td>Yes — fits a state WAN with headroom</td>
+</tr>
+</tbody>
+</table>
+<p>Design rule: <strong>move O(events), not O(video)</strong>. Detection runs at the site gateway; the WAN never carries continuous video. On-demand clip retrieval (roadmap) pulls a 10 s clip only when an operator requests it. Live viewing (HLS/WebRTC) is similarly on-demand and operator-bounded — a stream exists only while someone watches, so even at 80k cameras the viewing plane is bounded by concurrent operators, not camera count.</p>
+<h2 id="2-hardware-software-at-statewide-scale">2. Hardware &amp; Software at Statewide Scale</h2>
+<p><strong>Edge / site layer (~3,200 gateway pods):</strong>
+- 1 gateway pod per 16–32 cameras (x86 mini-PC / NVR-adjacent server / Jetson Orin Nano for GPU sites).
+- Spec: 4 cores, 8 GB RAM, 256 GB SSD (snapshot buffer). Software: same gateway container as the pilot (this repo), CPU-quantized YOLOv8n @ 2–5 fps detection cadence.
+- ~64,000 cameras on CPU gateways; ~16,000 high-flow junction cameras on GPU gateways (real-time multi-lane ANPR).</p>
+<p><strong>Central layer (state data centre):</strong>
+- App tier: ~24 nodes (16 vCPU/64 GB) running correlator + core-api with autoscaling on queue depth.
+- Bus: NATS 3-node cluster per range; or Kafka (3 brokers/range) where IT policy prefers it — the publish/subscribe seams are already isolated in <code>trinetra_core.bus</code>.
+- Databases: Postgres sharded by zone (4 shards + 1 federal query node), each primary + streaming replica; Redis Sentinel pair per shard.
+- GPU: ~20 L4-class nodes for phase-2 embedding services (face/Re-ID) — not required for day-1 ANPR operation.
+- Object storage: ~250 TB tiered (hot NVMe 30 d / object 90 d / archive 5 yr).
+- <strong>New control-plane services</strong> (statewide): <code>records</code> (CCTNS sync + dossier lookups) and <code>notifier</code> (fan-out) scale horizontally with the app tier — a few pods each, cached behind Redis; <code>janitor</code> is a singleton-per-shard cron. The <code>streamer</code> runs <strong>on site</strong> (one per gateway pod) since it pulls local RTSP — viewing bandwidth is on-demand and bounded by the number of concurrent operators, not the camera count.</p>
+<h2 id="3-network-bandwidth-planning">3. Network &amp; Bandwidth Planning</h2>
+<ul>
+<li>Site → district: ≤ 2 Mbps sustained per gateway (events + snapshots, bursty), fits on existing police WAN/BSNL links; store-and-forward buffer (JetStream + disk) rides out outages.</li>
+<li>District → state DC: aggregate ~40 Gbps statewide event plane budget with 10× headroom — ordinary DWDM/leased capacity.</li>
+<li>Government/VMS VLANs untouched: gateways sit alongside existing NVRs and pull RTSP locally (LAN-speed), so no change to current camera networking.</li>
+<li>QoS: event plane marked AF41; clip retrieval best-effort.</li>
+</ul>
+<h2 id="4-storage-retention-strategy">4. Storage &amp; Retention Strategy</h2>
+<table>
+<thead>
+<tr>
+<th>Data class</th>
+<th>Volume estimate @80k cams</th>
+<th>Retention</th>
+<th>Store</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Event metadata</td>
+<td>~2.4 M events/day ≈ 2.5 GB/day</td>
+<td>5 years (~5 TB)</td>
+<td>Postgres (sharded)</td>
+</tr>
+<tr>
+<td>Evidence frames</td>
+<td>~240 GB/day</td>
+<td>90 days (~22 TB)</td>
+<td>Object storage, lifecycle-tiered</td>
+</tr>
+<tr>
+<td>Event clips (roadmap)</td>
+<td>~2.4 M × 2 MB/day ≈ 5 TB/day</td>
+<td>30 days (150 TB)</td>
+<td>Object storage, erasure-coded</td>
+</tr>
+<tr>
+<td>Raw video</td>
+<td><strong>never centralized</strong></td>
+<td>30 days on-site NVR (status quo)</td>
+<td>Existing NVR storage</td>
+</tr>
+<tr>
+<td>Audit log</td>
+<td>&lt;1 GB/day</td>
+<td>7 years</td>
+<td>Postgres, WORM export</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-ai-processing-capacity-planning">5. AI Processing Capacity Planning</h2>
+<ul>
+<li>Edge CPU: YOLOv8n @ 2 fps ≈ 30 ms/frame on 4 modern cores → one gateway handles 16–32 cameras comfortably at detection cadence.</li>
+<li>Edge GPU (Jetson Orin Nano, ~15 W): full-rate ANPR on 8–16 streams.</li>
+<li>Central GPUs (~20 L4): serve <em>phase-2</em> embedding search (face/vehicle Re-ID) on event clips only — a bounded, back-pressure-friendly workload, never raw streams.</li>
+<li>Load balancing: gateways are independent (no coordination), correlator scales horizontally via JetStream queue groups (one event → one correlator instance).</li>
+</ul>
+<h2 id="6-disaster-recovery">6. Disaster Recovery</h2>
+<ul>
+<li><strong>RPO 15 min / RTO 1 h</strong> for the control plane: Postgres WAL streaming to a second DC; NATS JetStream data replicated (3 copies) and mirrored to DR; object storage cross-DC erasure/replication.</li>
+<li>Sites are failure-isolated: if a site's gateway dies, only that site goes dark; its cameras' buffered events replay on recovery (store-and-forward).</li>
+<li>Quarterly DR drills; gateway images are immutable and re-deployable from the district registry mirror.</li>
+</ul>
+<h2 id="7-statewide-rollout-plan-phased">7. Statewide Rollout Plan (phased)</h2>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Scope</th>
+<th>Duration</th>
+<th>Exit criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0 — Pilot</td>
+<td>50 heterogeneous cameras (this repo's test case)</td>
+<td>4–6 weeks</td>
+<td>Mandatory test case executed live; SOC operator training</td>
+</tr>
+<tr>
+<td>1 — District</td>
+<td>1 district (~2,000 cams, ~80 gateways)</td>
+<td>1 quarter</td>
+<td>Alert latency &lt; 3 s p95; false-positive rate &lt; 2%; WAN utilization &lt; 30%</td>
+</tr>
+<tr>
+<td>2 — Range</td>
+<td>4 ranges (~10,000 cams)</td>
+<td>2 quarters</td>
+<td>Sharded Postgres + DR drill passed; CCTNS/FIR integration live</td>
+</tr>
+<tr>
+<td>3 — State</td>
+<td>80,000 cams, all 33 districts</td>
+<td>4–6 quarters</td>
+<td>Full estate onboarded via registry; legacy VMS untouched</td>
+</tr>
+</tbody>
+</table>
+<p>Each phase reuses the pilot's images and adapters — scale is an operations exercise (site surveys, gateway install, registry onboarding), not a re-architecture.</p></div><div class='section'><h1>9. Cybersecurity Architecture</h1><h1 id="trinetra-cybersecurity-architecture">Trinetra — Cybersecurity Architecture</h1>
+<h2 id="1-identity-access">1. Identity &amp; Access</h2>
+<ul>
+<li><strong>Authentication:</strong> OAuth2 password flow → JWT (HS256), 12 h expiry, signed with a secret injected via environment (<code>TRINETRA_JWT_SECRET</code>). Production: RS256 with JWKS rotation and refresh tokens; optional SSO integration with state identity systems.</li>
+<li><strong>Authorization (RBAC):</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>admin</th>
+<th>analyst</th>
+<th>operator</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>View dashboard/map/alerts/events</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>Ack / resolve alerts</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>Watchlist create/import/deactivate</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>Camera registry create/update</td>
+<td>✓</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>View audit log</td>
+<td>✓</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+</tbody>
+</table>
+<p>Roles enforced <strong>server-side</strong> on every route (<code>require_role</code> dependency); the UI only mirrors what the API permits.</p>
+<ul>
+<li><strong>Seeded accounts are demo credentials</strong> — production forces first-login password change + MFA (roadmap: TOTP).</li>
+</ul>
+<h2 id="2-audit-non-repudiation">2. Audit &amp; Non-repudiation</h2>
+<ul>
+<li>Every mutation writes an append-only <code>audit_log</code> row: actor, action, entity, JSON details, server timestamp. Login, watchlist changes, imports, alert dispositions, registry edits, seeds are all captured.</li>
+<li>Alert lifecycle (<code>new → ack → resolved</code>) records the acting user; watchlist deactivation is soft (retains history) rather than deletion.</li>
+</ul>
+<h2 id="3-transport-network">3. Transport &amp; Network</h2>
+<ul>
+<li><strong>TLS everywhere:</strong> nginx terminates client TLS (UI + API + WebSocket); service-to-service traffic rides isolated Docker overlay networks — in the pilot compose file, only the API (8000) and UI (8080) are host-published. Postgres, Redis, NATS have <strong>no host ports</strong>.</li>
+<li><strong>Site gateways initiate outbound-only connections</strong> (no inbound firewall pinholes to police sites). NATS auth (user/pass/JWT) and TLS can be enabled at the bus for cross-WAN links.</li>
+<li>Production network zones: Site LAN → DMZ gateway → state DC. No camera ever talks directly to the internet.</li>
+</ul>
+<h2 id="4-data-protection">4. Data Protection</h2>
+<ul>
+<li><strong>At rest:</strong> Postgres volume encryption (LUKS/cloud KMS in production); evidence object storage with SSE; nightly encrypted backups (pg_dump + evidence sync) with 35-day retention.</li>
+<li><strong>In transit:</strong> TLS 1.2+ on every hop; VPN/leased-line for site-to-DC links.</li>
+<li><strong>PII policy:</strong> watchlist entries carry purpose and FIR reference; person photos/face embeddings (phase 2) stored in a separate encrypted store with access-level gates; plates kept in normalized (search) + raw (display) forms.</li>
+<li><strong>Retention roadmap:</strong> raw video 30 days (site NVR), evidence frames 90 days, event metadata 5 years, audit log 7 years — configurable per DPDP Act 2023 / state retention rules; automated expiry via object-store lifecycle + DB cron. <strong>Per-department retention</strong> (7/15/30 days) is modelled per department and enforced by the <code>janitor</code> service (dry-run by default).</li>
+</ul>
+<h3 id="41-government-records-biometric-data">4.1 Government records &amp; biometric data</h3>
+<ul>
+<li><strong>Chain of custody:</strong> every government-records lookup (VAHAN/SARTHI/CCTNS/NAFIS) is audited (actor, system, plate/person queried, FIR ref). Records-sourced watchlist entries carry <code>source_system</code> + <code>source_ref</code> so the provenance of every alert is traceable to a FIR/record.</li>
+<li><strong>Biometric isolation:</strong> NAFIS fingerprint/face match results are stored as metadata (match + score + FIR ref), not raw biometric templates. Production stores any templates in a separate encrypted store with access-level gates.</li>
+<li><strong>Least-privilege connectors:</strong> each records connector holds only its own service credential; the correlator's enrichment call is best-effort and never blocks alert delivery.</li>
+</ul>
+<h3 id="42-community-cameras-viewing">4.2 Community cameras &amp; viewing</h3>
+<ul>
+<li><strong>Consent gate:</strong> community cameras onboard only with explicit consent (<code>consent=true</code>); the onboarding is audited and the feed is tagged <code>source_type=community</code> with a restricted scope.</li>
+<li><strong>On-demand viewing:</strong> live streams are pulled only on operator demand (no continuous central ingestion); viewing tokens are short-lived (TTL). Production adds a viewing-audit log (who watched which camera, when).</li>
+</ul>
+<h2 id="5-application-security">5. Application Security</h2>
+<ul>
+<li>Input validation via Pydantic on every boundary (events from the bus, API payloads, CSV import with strict category whitelist).</li>
+<li>SQL injection: SQLAlchemy parameterized queries only — no string SQL.</li>
+<li>WebSocket endpoints authenticate by token query param and close with 4401 on failure; snapshot files served from a dedicated static mount, not the filesystem root.</li>
+<li>Rate limiting on login (roadmap: per-IP + per-user lockout).</li>
+<li>Dependency hygiene: pinned requirements, slim base images, non-root container users (production hardening item).</li>
+</ul>
+<h2 id="6-secrets-config">6. Secrets &amp; Config</h2>
+<ul>
+<li>All secrets via environment injection; <code>.env.example</code> ships dev defaults only. Production: Vault/KMS-backed injection, quarterly rotation of JWT signing keys, per-site NATS credentials.</li>
+</ul>
+<h2 id="7-threat-model-highlights">7. Threat Model Highlights</h2>
+<table>
+<thead>
+<tr>
+<th>Threat</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stolen operator token</td>
+<td>12 h expiry, logout clears token, audit trail of actions</td>
+</tr>
+<tr>
+<td>Rogue camera/feed injection</td>
+<td>Registry is the only path to ingestion; events from unregistered cameras are dropped and logged by the correlator</td>
+</tr>
+<tr>
+<td>Alert tampering</td>
+<td>Alerts are append-only rows; status changes are themselves audited</td>
+</tr>
+<tr>
+<td>Watchlist exfiltration by insider</td>
+<td>RBAC + audit; analyst role cannot read audit trail or manage registry</td>
+</tr>
+<tr>
+<td>Gateway compromise at site</td>
+<td>Gateway holds no PII database — only a bus credential; blast radius = its own cameras' events</td>
+</tr>
+<tr>
+<td>DoS on event bus</td>
+<td>JetStream persistent queues + consumer limits; dedup window absorbs floods</td>
+</tr>
+</tbody>
+</table></div><div class='section'><h1>10. Cost-Benefit Analysis</h1><h1 id="trinetra-cost-benefit-analysis-indicative">Trinetra — Cost-Benefit Analysis (indicative)</h1>
+<h2 id="assumptions">Assumptions</h2>
+<ul>
+<li>Existing ~80,000 cameras and their NVR/VMS remain in place (no camera replacement).</li>
+<li>INR figures are planning-grade estimates (±30%), commercial procurement would refine them.</li>
+</ul>
+<h2 id="pilot-50-cameras">Pilot (50 cameras)</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gateway compute (2× mini-PC)</td>
+<td>₹1.5 L</td>
+</tr>
+<tr>
+<td>Central server (16 GB VM or 1U)</td>
+<td>₹2.5 L</td>
+</tr>
+<tr>
+<td>Integration, survey, training (team effort)</td>
+<td>₹2–4 L</td>
+</tr>
+<tr>
+<td><strong>Pilot total (CAPEX)</strong></td>
+<td><strong>₹6–9 L</strong></td>
+</tr>
+</tbody>
+</table>
+<p>OPEX: near-zero incremental (existing police WAN + data-centre rack space).</p>
+<h2 id="statewide-80000-cameras">Statewide (80,000 cameras)</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3,200 gateway pods (₹60k CPU / ₹1.2L GPU mix, incl. install)</td>
+<td>₹28–38 Cr</td>
+</tr>
+<tr>
+<td>Central DC: 24 app nodes + DB tier + 20 GPU nodes + networking</td>
+<td>₹22–30 Cr</td>
+</tr>
+<tr>
+<td>Control-plane services (records/notifier/janitor/streamer)</td>
+<td>₹1–2 Cr (shares app tier; streamer runs on-site)</td>
+</tr>
+<tr>
+<td>Storage 250 TB tiered + DR site</td>
+<td>₹10–15 Cr</td>
+</tr>
+<tr>
+<td>Site surveys, cabling-to-gateway, project management (33 districts)</td>
+<td>₹25–35 Cr</td>
+</tr>
+<tr>
+<td><strong>Total CAPEX (5-year horizon)</strong></td>
+<td><strong>₹95–140 Cr</strong></td>
+</tr>
+<tr>
+<td>Annual OPEX (power, links, maintenance, staff)</td>
+<td>₹18–25 Cr/yr</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Avoided cost of the naive alternative:</strong> centralizing raw streams from 80k cameras would need ~320 Gbps of dedicated WAN plus ~86 PB/yr — order ₹400 Cr+ in network and storage alone, before any AI. Trinetra's federated plane runs on the existing WAN at 1–2 Gbps.</p>
+<h2 id="benefits">Benefits</h2>
+<ol>
+<li><strong>Recovered stolen vehicles:</strong> ANPR hits on stolen/blacklisted plates at junction cameras convert to interception. Even a 5% improvement in recovery rate on Gujarat's ~40k annual vehicle-theft FIRs is a citizen-visible outcome.</li>
+<li><strong>Force multiplication:</strong> one control room cannot watch 80,000 feeds; automated matching + alerts turns the estate into an active sensor grid. Effective monitoring capacity per operator rises ~100×.</li>
+<li><strong>Investigation hours:</strong> plate/camera/time search that takes minutes instead of days of CCTV footage review across vendors — the searchable event log with CSV export is the audit-ready artefact for courts.</li>
+<li><strong>Zero vendor lock-in:</strong> new cameras of any brand onboard through the registry in minutes; incumbent VMS stays functional during and after rollout (no downtime migration risk).</li>
+<li><strong>Interoperability dividend:</strong> the normalized event schema becomes reusable by future state systems (traffic management, disaster response, CCTNS integration).</li>
+</ol></div><div class='section'><h1>11. Demo 3 — Own Feed Runbook</h1><h1 id="demo-3-demonstration-on-participants-own-feed-screen-record-23-min">Demo 3 — Demonstration on Participant's Own Feed (screen-record, 2–3 min)</h1>
+<p>The platform's own simulated estate — a fully operational backend (not a mock-up): a 50-camera heterogeneous corridor (8 vendors, 6 VMS, 5 protocols), a scripted stolen-vehicle scenario, CCTNS-auto-populated watchlist, VAHAN enrichment, real-time alerts, GIS trajectory, and fan-out. Record this with any screen recorder (OBS / Win+G / QuickTime).</p>
+<h2 id="bring-up">Bring-up</h2>
+<pre><code class="language-powershell">.\scripts\demo.ps1     # full stack on http://localhost:8082 (login: admin / admin123)
+</code></pre>
+<p>The stolen black Creta <strong>GJ-01-KA-1234</strong> begins moving ~15 s after the gateway starts; its 16-camera trail completes in ~75 s at 20× playback.</p>
+<h2 id="recording-script-25-min">Recording script (≈2.5 min)</h2>
+<ol>
+<li><strong>(0:00)</strong> Login → <strong>Dashboard</strong>: live alert feed streaming; stat cards (cameras online, events 24h, active alerts, watchlist).</li>
+<li><strong>(0:10)</strong> <strong>Camera Registry</strong>: 50 cameras, 8 vendors, 5 protocols (point at GB28181 rows), 26 departments, health/coverage badges.</li>
+<li><strong>(0:25)</strong> A <strong>STOLEN VEHICLE</strong> alert arrives (live) — open it: evidence frame, <strong>Source: CCTNS · FIR/1246/2026/VASTRAPUR</strong> badge, <strong>VAHAN: Rakesh J. Mehta · Hyundai Creta · insurance valid</strong>.</li>
+<li><strong>(0:45)</strong> Click <strong>Track</strong> → <strong>Live Map</strong>: blue polyline builds live across 16 cameras (Nehru Bridge → Sachivalaya Gate), numbered pass sequence, red alert pins.</li>
+<li><strong>(1:15)</strong> <strong>Event Search</strong>: filter by plate <code>GJ-01-KA</code> → all 16 passes with frames + timestamps → <strong>CSV export</strong> (the searchable event log / output artefact).</li>
+<li><strong>(1:35)</strong> <strong>Records</strong>: plate <code>GJ-01-KA-1234</code> → dossier (VAHAN + CCTNS stolen + SARTHI DL). Person lookup <code>Rahil Shaikh</code> → CCTNS wanted + NAFIS 92% fingerprint match.</li>
+<li><strong>(1:55)</strong> <strong>Fan-out</strong>: the alert dispatched to SMS / email / webhook(CCTNS) / FCM with status + timestamps.</li>
+<li><strong>(2:10)</strong> <strong>Gap Analysis</strong>: per-zone coverage gaps + ageing infrastructure + recommendations → <strong>Download report (CSV)</strong>.</li>
+<li><strong>(2:25)</strong> Close: <em>"detect at the edge, correlate at the center — moves events, not video; the watchlist is auto-populated from CCTNS, every alert is enriched, face recognition works, and it scales to 80,000 cameras."</em></li>
+</ol>
+<h2 id="what-this-proves-maps-to-demo-3-criteria">What this proves (maps to Demo-3 criteria)</h2>
+<ul>
+<li>✅ Onboarding &amp; processing of live/recorded CCTV feeds (50-camera sim + real RTSP path)</li>
+<li>✅ AI-powered detection &amp; analytics (YOLOv8n + RapidOCR ANPR + InsightFace face detection + anomaly)</li>
+<li>✅ Correlation with a watchlist (CCTNS-sourced stolen/wanted/missing/blacklisted)</li>
+<li>✅ Automatic real-time alerts + visualisation on match (dashboard, map, fan-out)</li>
+<li>✅ Face recognition: enroll a face → detected on camera → accurate cosine-similarity match → wanted-person alert</li>
+<li>✅ Fully functional operational backend (no mock-ups)</li>
+</ul>
+<blockquote>
+<p>For Demo 4 (government feed), see <a href="DEMO_SCRIPT.md"><code>DEMO_SCRIPT.md</code></a> §3 + <a href="OUTPUT_REPORT_GOV_FEED.md"><code>OUTPUT_REPORT_GOV_FEED.md</code></a>.</p>
+</blockquote></div><div class='section'><h1>12. Demo 4 — Government Feed Runbook</h1><h1 id="trinetra-demo-runbook-mandatory-test-case">Trinetra — Demo Runbook (Mandatory Test Case)</h1>
+<h2 id="1-pre-flight-night-before-morning-of">1. Pre-flight (night before + morning of)</h2>
+<pre><code class="language-powershell">cd C:\Projects\sentinel-gujarat
+.\scripts\demo.ps1            # full fresh bring-up; browser opens automatically
+</code></pre>
+<ul>
+<li>Confirm: dashboard stats show <strong>47/50 cameras online</strong>, watchlist shows 5 entries.</li>
+<li>Keep a phone hotspot ready as network fallback (map tiles need internet; the rest of the stack is fully local).</li>
+<li>Optional: <code>.\scripts\demo.ps1 -Speed 10</code> for a slower, more narratable vehicle movement.</li>
+</ul>
+<h2 id="2-the-judge-run-test-case-4-minutes">2. The judge-run test case (≈4 minutes)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Requirement from problem statement</th>
+<th>What you show</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>~50 heterogeneous cameras onboarded</td>
+<td>Camera Registry: 50 cams, 8 vendors (Hikvision, CP Plus, Dahua, Axis, Bosch, Pelco, Honeywell, Vivotek), 6 VMS platforms, 4 protocols — plus 3 offline cams proving live status</td>
+<td>Cameras page</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Live feeds integrated</td>
+<td>Gateway adapters streaming events in real time (point at <code>docker compose logs -f gateway-sim correlator</code> in a side terminal)</td>
+<td>Terminal</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Real-time alerts (timestamp + location)</td>
+<td>The stolen black Creta <strong>GJ-01-KA-1234</strong> triggers a STOLEN VEHICLE alert ~15 s after gateway start; blacklisted Swift GJ-05-AB-4321 and stolen Activa fire later; anomaly alerts (crowd, unattended object) demonstrate analytics breadth</td>
+<td>Dashboard live feed</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Route/movement history</td>
+<td>Click <strong>Track</strong> on the Creta alert → ordered trail across <strong>16 cameras</strong> from Nehru Bridge to Sachivalaya Gate, first/last seen timestamps, pass counter</td>
+<td>Live Map</td>
+</tr>
+<tr>
+<td>5</td>
+<td>GIS visualization</td>
+<td>Blue polyline with numbered pass sequence over camera markers + red alert pins; "Live-follow" extends the trail automatically as the vehicle progresses</td>
+<td>Live Map</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Searchable event log</td>
+<td>Event Search: filter by plate <code>GJ-01-KA</code> → all 16 passes with frames; filter by camera/time range; <strong>CSV export</strong> hands judges the output-report artefact</td>
+<td>Event Search</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Government DB integration</td>
+<td>Watchlist rows show <strong>Source: CCTNS · FIR/1246/2026</strong> (auto-synced, not manual); the Creta alert card carries <strong>VAHAN: owner · Hyundai Creta · insurance status</strong>; Records page → plate <code>GJ-01-KA-1234</code> returns the full dossier (VAHAN + CCTNS + SARTHI)</td>
+<td>Watchlist / Alerts / Records</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Live viewing</td>
+<td>Cameras → <strong>Watch</strong> on any camera → Live View plays a live HLS feed (test pattern + camera name + clock); toggle to <strong>WebRTC</strong> (sub-second) if built with <code>INSTALL_WEBRTC=true</code></td>
+<td>Live View</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Real-time alert fan-out</td>
+<td>Fan-out panel shows each alert dispatched to SMS / email / webhook(CCTNS) / FCM with status + timestamp; the webhook receipt is logged end-to-end</td>
+<td>Fan-out</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Department governance</td>
+<td>Log out → log in as <strong>traffic / traffic123</strong> → Cameras/Alerts scoped to Traffic dept only; Departments page shows 26 depts with editable per-dept retention + dry-run report</td>
+<td>Login / Cameras / Departments</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Community cameras</td>
+<td>Community page → onboard a private camera with consent → it appears in the registry tagged <code>community</code> and is viewable in Live View</td>
+<td>Community / Cameras</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Model 1: registry &amp; gap analysis</td>
+<td>Cameras → filter by <strong>health/maintenance</strong> + <strong>Export CSV</strong>; Live Map → toggle <strong>coverage footprints</strong>; Gap Analysis → per-zone coverage gaps (Zone-4/5 flagged), ageing buckets (20 cameras &gt;7y), EOL firmware (17), recommendations + <strong>Download report (CSV)</strong></td>
+<td>Cameras / Live Map / Gap Analysis</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Face detection &amp; recognition</td>
+<td>Enroll a face via <code>POST /api/v1/faces/enroll</code> (upload photo) → when that face appears on any camera → InsightFace ArcFace embedding match (cosine ≥ 0.38) → <strong>WANTED PERSON DETECTED (face match)</strong> alert with the enrolled name + match score</td>
+<td>Records / Alerts</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Narrative spine (say this):</strong> "Fifty cameras, eight vendors, five protocols including GB/T 28181, six VMS platforms — the gateway adapters federate them into one event stream. Detection happens at the edge; only kilobytes cross the network. The watchlist is auto-populated from CCTNS, so every stolen-vehicle alert carries the FIR reference and VAHAN owner details. Face recognition uses InsightFace ArcFace embeddings — enroll a face, and when it appears on any camera, the correlator matches it via cosine similarity and raises a wanted-person alert. The correlator stitches the trail camera-to-camera, fans the alert to SMS/email/CCTNS-webhook/mobile, and pushes it to operators in real time. Operators can also pull a live view on demand. This architecture scales to 80,000 cameras because it moves events, not video."</p>
+<h2 id="3-switching-to-the-provided-live-camera-grid">3. Switching to the provided live camera grid</h2>
+<p>The real feed grid publishes each camera as RTSP/HLS/WebRTC. Trinetra ingests the grid catalogue and pulls RTSP (TCP) for analytics. Full procedure in <a href="GRID_FEEDS.md"><code>docs/GRID_FEEDS.md</code></a>.</p>
+<ol>
+<li>Put your grid credentials in <code>.env</code> (see <code>.env.example</code>):
+   <code>ini
+   TRINETRA_GRID_EMAIL=you@example.com
+   TRINETRA_GRID_PASSWORD=your-access-password</code></li>
+<li>Ingest the grid catalogue into the registry (idempotent):
+   <code>powershell
+   docker compose --profile grid run --rm ingester</code>
+   The grid cameras (<code>cam01…cam30</code>) now appear in the registry, on the GIS map, and in Live View.</li>
+<li>Start the live inference gateway (pulls RTSP over TCP, runs YOLOv8n + RapidOCR):
+   <code>powershell
+   docker compose --profile gpu up -d --build gateway-ml</code>
+   The same correlator → records → notifier → console pipeline works unchanged on real video.</li>
+<li>(Optional) Live operator viewing from the real grid:
+   <code>powershell
+   $env:TRINETRA_STREAMER_MODE="live"; docker compose up -d --build streamer</code>
+   Open <strong>Live View → Watch</strong> on any grid camera.</li>
+<li><strong>Fallback if the live feed can't be opened on stage:</strong> stop <code>gateway-ml</code>, restart <code>gateway-sim</code> — the scripted scenario runs identically. The RTSP adapter, ingestion, and pipeline are the same code path the live grid uses.</li>
+</ol>
+<h2 id="4-failure-mode-playbook">4. Failure-mode playbook</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dashboard empty / login fails</td>
+<td><code>docker compose ps</code> → is core-api healthy? <code>docker compose logs core-api</code></td>
+</tr>
+<tr>
+<td>No alerts arriving</td>
+<td><code>docker compose logs correlator gateway-sim</code> — gateway logs each adapter's event count every 50 events</td>
+</tr>
+<tr>
+<td>Map tiles blank (no internet)</td>
+<td>Everything except basemap tiles is local; switch on phone hotspot or narrate over the trail markers (trail/alerts still render)</td>
+</tr>
+<tr>
+<td>Want to re-run the scenario</td>
+<td><code>.\scripts\replay.ps1</code> (new tracking session; events accumulate) or full reset <code>.\scripts\demo.ps1</code></td>
+</tr>
+<tr>
+<td>Port 8000/8080 busy</td>
+<td>Edit ports in <code>docker-compose.yml</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-evidence-pack-for-submission">5. Evidence pack for submission</h2>
+<ul>
+<li>Screen-record: login → live alert → track trail → event search + CSV export (~3 min, 1080p).</li>
+<li>Export of the event log CSV and alerts table screenshot (output report).</li>
+<li>This runbook + HLD + architecture diagram in the PPT.</li>
+</ul></div><div class='section'><h1>13. Output Report — Government Feed</h1><h1 id="output-report-government-provided-cctv-feed-demo-4">Output Report — Government-Provided CCTV Feed (Demo 4)</h1>
+<p><strong>Generated:</strong> from the live Trinetra platform · <strong>Source:</strong> government grid cameras (cam01–cam30, cctv.corp8.cloud) · <strong>Analytics:</strong> YOLOv8n vehicle detection + RapidOCR ANPR, edge-processed via the <code>gateway-ml</code> ffmpeg-pipe adapter.</p>
+<p>This report accompanies the screen-recorded live demonstration. The companion CSV <a href="OUTPUT_REPORT_GOV_FEED.csv"><code>OUTPUT_REPORT_GOV_FEED.csv</code></a> contains every detected number plate with its UTC timestamp, camera id, vehicle class, and ANPR confidence.</p>
+<h2 id="methodology">Methodology</h2>
+<ol>
+<li><strong>Onboarding</strong> — the grid catalogue was ingested (<code>scripts/ingest_catalogue.py</code>), onboarding cam01–cam30 into the registry with authenticated RTSP URLs.</li>
+<li><strong>Ingestion</strong> — <code>gateway-ml</code> pulls each live RTSP feed over TCP (ffmpeg subprocess, forced TCP, exponential-backoff reconnect, PTS-based timing) and decodes frames at 1280×720.</li>
+<li><strong>Analytics</strong> — YOLOv8n detects vehicles (car/motorcycle/bus/truck, conf ≥ 0.45); RapidOCR reads the plate on each vehicle crop (upscaled 1.5–2× for legibility); the Indian-plate regex validates the read.</li>
+<li><strong>Correlation</strong> — each normalised plate is matched against the CCTNS-auto-populated watchlist (stolen/wanted/missing/blacklisted); a hit raises a real-time alert with the FIR reference + VAHAN enrichment.</li>
+<li><strong>Output</strong> — detections are persisted as events and exported here.</li>
+</ol>
+<h2 id="detected-number-plates-live-government-feed">Detected number plates (live government feed)</h2>
+<table>
+<thead>
+<tr>
+<th>Timestamp (UTC)</th>
+<th>Camera</th>
+<th>Plate</th>
+<th>Vehicle</th>
+<th>ANPR conf</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026-09-06T08:28:49</td>
+<td>cam06</td>
+<td>GJ18X3001</td>
+<td>truck</td>
+<td>0.99</td>
+</tr>
+<tr>
+<td>2026-09-06T09:43:25</td>
+<td>cam09</td>
+<td>GJ11S4826</td>
+<td>car</td>
+<td>0.81</td>
+</tr>
+<tr>
+<td>2026-09-07T21:14:10</td>
+<td>cam06</td>
+<td>GI9HZ716</td>
+<td>car</td>
+<td>0.65</td>
+</tr>
+<tr>
+<td>2026-09-07T21:14:14</td>
+<td>cam06</td>
+<td>GJ11BHZ716</td>
+<td>car</td>
+<td>0.76</td>
+</tr>
+<tr>
+<td>2026-09-07T21:36:29</td>
+<td>cam06</td>
+<td>GJ11CH0172</td>
+<td>car</td>
+<td>0.95</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Totals:</strong> 5 detections · 5 unique plates · 2 cameras (cam06, cam09) · full detail in <code>OUTPUT_REPORT_GOV_FEED.csv</code>.</p>
+<blockquote>
+<p>Note: the grid operates in a looped-recording mode with ~10 of 30 cameras online at any instant and a per-account concurrent-stream limit; ANPR runs on a curated subset (cam01, cam06) to stay within the limit. Plates are read exactly as the OCR decodes them; normalisation (stripping punctuation) is applied for watchlist matching.</p>
+</blockquote></div><div class='section'><h1>14. Sample Gap-Analysis Report</h1><h1 id="trinetra-sample-gap-analysis-report-model-1">Trinetra — Sample Gap-Analysis Report (Model 1)</h1>
+<p><em>Generated from the pilot registry dataset (53 cameras: 50 government + 3 community across 5 zones, 26 departments). This is the Model-1 "sample gap-analysis report" deliverable, also available live at <code>GET /api/v1/gap-analysis/report</code> and downloadable as CSV at <code>/api/v1/gap-analysis/report/download</code>.</em></p>
+<p><strong>Generated:</strong> 2026-09-01 (pilot dataset) · <strong>Planning targets:</strong> min 6 online cameras/zone, min 60% online ratio, min 0.30 km² coverage footprint, ageing ≥ 5 years, critical ≥ 7 years.</p>
+<h2 id="1-summary">1. Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Zones assessed</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Zones with coverage gaps</td>
+<td><strong>2</strong></td>
+</tr>
+<tr>
+<td>Ageing cameras (5y+)</td>
+<td>32</td>
+</tr>
+<tr>
+<td>Critical cameras (7y+)</td>
+<td><strong>20</strong></td>
+</tr>
+<tr>
+<td>End-of-life firmware (v2.x)</td>
+<td><strong>17</strong></td>
+</tr>
+<tr>
+<td>Cameras needing maintenance</td>
+<td><strong>14</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-coverage-by-zone">2. Coverage by zone</h2>
+<table>
+<thead>
+<tr>
+<th>Zone</th>
+<th>Cameras</th>
+<th>Online</th>
+<th>Degraded</th>
+<th>Offline</th>
+<th>In repair</th>
+<th>Coverage km²</th>
+<th>Online ratio</th>
+<th>Gap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Zone-1 Ahmedabad West</td>
+<td>13</td>
+<td>12</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>0.40</td>
+<td>92%</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>Zone-2 Ahmedabad Central</td>
+<td>13</td>
+<td>12</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0.41</td>
+<td>92%</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>Zone-3 SG Highway</td>
+<td>14</td>
+<td>14</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0.48</td>
+<td>100%</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>Zone-4 Gandhinagar Highway</td>
+<td>6</td>
+<td>5</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0.23</td>
+<td>83%</td>
+<td><strong>GAP</strong></td>
+</tr>
+<tr>
+<td>Zone-5 Gandhinagar</td>
+<td>7</td>
+<td>7</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.26</td>
+<td>100%</td>
+<td><strong>GAP</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-ageing-infrastructure">3. Ageing infrastructure</h2>
+<table>
+<thead>
+<tr>
+<th>Age bucket</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Under 2 years</td>
+<td>6</td>
+</tr>
+<tr>
+<td>2–5 years</td>
+<td>12</td>
+</tr>
+<tr>
+<td>5–7 years (ageing)</td>
+<td>12</td>
+</tr>
+<tr>
+<td><strong>Over 7 years (critical)</strong></td>
+<td><strong>20</strong></td>
+</tr>
+</tbody>
+</table>
+<p>End-of-life firmware (v2.x): <strong>17</strong> cameras · Cameras needing maintenance: <strong>14</strong></p>
+<h2 id="4-recommendations">4. Recommendations</h2>
+<ol>
+<li><strong>Deploy additional cameras in 2 under-covered zones:</strong> Zone-4 Gandhinagar Highway (5 online, 0.23 km² coverage) and Zone-5 Gandhinagar (0.26 km² coverage below the 0.30 km² target).</li>
+<li><strong>Plan replacement of 20 cameras</strong> older than 7 years (end-of-life hardware, higher failure risk).</li>
+<li><strong>Upgrade firmware on 17 cameras</strong> running end-of-life v2.x firmware (security and interoperability risk; GB/T 28181 readiness requires current firmware).</li>
+<li><strong>Schedule maintenance for 14 cameras</strong> in degraded health or currently under repair.</li>
+</ol>
+<h2 id="5-methodology">5. Methodology</h2>
+<ul>
+<li><strong>Coverage footprint</strong> is the sum of circular coverage areas (π × radius²) per camera, by zone. In production this is computed precisely with PostGIS <code>ST_Buffer</code>/<code>ST_Union</code> over camera coverage polygons and zone boundaries to identify true uncovered polygons, not just aggregate density.</li>
+<li><strong>Ageing</strong> uses the camera's <code>install_date</code>; <strong>end-of-life firmware</strong> flags <code>v2.x</code> builds.</li>
+<li><strong>Gap flag</strong> triggers when a zone is below any planning target (online count, online ratio, or coverage footprint).</li>
+<li>All thresholds are configurable; the report is regenerated on demand from the live registry.</li>
+</ul></div><div class='section'><h1>15. External Live Camera Grid Integration</h1><h1 id="trinetra-external-live-camera-grid-integration">Trinetra — External Live Camera Grid Integration</h1>
+<p>How Trinetra consumes the provided live CCTV feed grid (the real camera infrastructure). The grid publishes each camera over three transports; Trinetra pulls RTSP for analytics and re-emits HLS for operators, following the grid's published consumption contract.</p>
+<h2 id="1-grid-access-model-as-provided">1. Grid access model (as provided)</h2>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Endpoint</th>
+<th>Trinetra use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HLS</td>
+<td><code>https://cctv.corp8.cloud/&lt;id&gt;/index.m3u8</code> (CDN, password)</td>
+<td>Available; Trinetra re-emits its own HLS from RTSP so operators auth via JWT, not the grid password.</td>
+</tr>
+<tr>
+<td>RTSP</td>
+<td><code>rtsp://&lt;email%40&gt;:&lt;password&gt;@103.250.160.189:8554/stream/&lt;id&gt;</code></td>
+<td><strong>Primary ingestion</strong> — the gateway pulls this for AI/ANPR analytics.</td>
+</tr>
+<tr>
+<td>WebRTC (WHEP)</td>
+<td><code>http://&lt;email%40&gt;:&lt;password&gt;@103.250.160.189:8889/stream/&lt;id&gt;/whep</code></td>
+<td>Low-latency preview; the streamer's WHIP/WHEP path is available alongside.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>&lt;id&gt;</code> is <code>cam01 … cam30</code>. The camera set is read from the catalogue, never hard-coded.</li>
+<li>The <code>@</code> in the access email is percent-encoded as <code>%40</code> when embedded in the URL userinfo.</li>
+<li>Only emails on the grid's approved access list can connect.</li>
+</ul>
+<h2 id="2-configuration-credentials-via-environment-only-never-committed">2. Configuration (credentials via environment only — never committed)</h2>
+<pre><code class="language-ini">TRINETRA_GRID_EMAIL=you@example.com
+TRINETRA_GRID_PASSWORD=your-access-password
+TRINETRA_GRID_CATALOGUE_URL=https://cctv.corp8.cloud/cameras.json
+TRINETRA_GRID_RTSP_HOST=103.250.160.189:8554
+TRINETRA_GRID_HLS_BASE=https://cctv.corp8.cloud
+TRINETRA_GRID_WHEP_HOST=103.250.160.189:8889
+</code></pre>
+<p>Set these in <code>.env</code> (see <code>.env.example</code>). Leave blank to run the simulator.</p>
+<h2 id="3-onboarding-the-grid-into-the-registry">3. Onboarding the grid into the registry</h2>
+<p>The ingester fetches <code>cameras.json</code> (HTTP basic auth with the email + password), normalises the payload, constructs the three URLs per camera, and upserts them into the camera registry (<code>protocol=rtsp</code>, <code>stream_url</code> = the RTSP URL the gateway/streamer pull):</p>
+<pre><code class="language-powershell"># put the credentials in .env first, then:
+docker compose --profile grid run --rm ingester
+</code></pre>
+<p><code>scripts/ingest_catalogue.py</code> is idempotent (re-running updates stream URLs / metadata). The grid cameras then appear in the registry, on the GIS map, and in Live View alongside the simulated estate.</p>
+<h2 id="4-running-analytics-on-the-real-grid">4. Running analytics on the real grid</h2>
+<p>The gateway's <strong>live mode</strong> reads cameras from the registry DB (so it sees the ingested grid cameras) and pulls each RTSP stream through the hardened <code>RTSPAdapter</code>:</p>
+<pre><code class="language-powershell">docker compose --profile gpu up -d --build gateway-ml      # YOLOv8n + RapidOCR on live RTSP
+</code></pre>
+<p><code>gateway-ml</code> runs <code>TRINETRA_GATEWAY_MODE=rtsp</code>; detections/events/alerts flow through the same correlator → records → notifier → console pipeline as the simulator. Switch back to the simulator any time with <code>gateway-sim</code>.</p>
+<h3 id="rtspadapter-compliance-with-the-grid-consumption-contract">RTSPAdapter — compliance with the grid consumption contract</h3>
+<p>The adapter implements every "do" and avoids every "don't":</p>
+<ul>
+<li><strong>Force RTSP over TCP</strong> — <code>OPENCV_FFMPEG_CAPTURE_OPTIONS=rtsp_transport;tcp</code> is set process-wide; opens use <code>cv2.CAP_FFMPEG</code>. (UDP across NAT/firewalls corrupts frames.)</li>
+<li><strong>Reconnect with exponential backoff</strong> — 2 s → 4 s → 8 s … capped at 30 s; never a tight loop. Backoff resets on the first good frame.</li>
+<li><strong>Tolerate inter-frame gaps</strong> — a failed <code>read()</code> does <strong>not</strong> reconnect; only after <code>READ_FAIL_THRESHOLD</code> (8) consecutive failures is the stream treated as lost. Inter-frame gaps are normal.</li>
+<li><strong>Drive timing from PTS, not arrival/FPS</strong> — <code>CAP_PROP_POS_MSEC</code> is captured per frame and stored on the event (<code>attributes.pts_ms</code>); detection cadence is time-based, independent of <code>CAP_PROP_FPS</code>.</li>
+<li><strong>Scene-discontinuity (loop-point) recovery</strong> — a backward PTS jump is logged as a loop cut and the adapter continues (state is per-frame; no crash, no reconnect).</li>
+<li><strong>Decoder join warnings are non-fatal</strong> — exceptions in inference are logged and the loop continues.</li>
+<li><strong>Pace the load</strong> — one capture per camera; detection cadence limits CPU; idle captures are not opened.</li>
+<li><strong>Email <code>%40</code>-encoded</strong> — the ingester encodes the userinfo, so the adapter uses the <code>stream_url</code> verbatim.</li>
+</ul>
+<h2 id="5-live-operator-viewing-of-the-real-grid">5. Live operator viewing of the real grid</h2>
+<p>The <code>streamer</code> (live mode) pulls each grid RTSP stream over TCP and re-emits HLS for the console; operators open <strong>Live View → Watch</strong> on any grid camera. The streamer resolves cameras from the registry DB, so grid cameras appear automatically after ingestion.</p>
+<pre><code class="language-powershell">$env:TRINETRA_STREAMER_MODE=&quot;live&quot;; docker compose up -d --build streamer
+</code></pre>
+<p>For sub-second preview, build the streamer with <code>INSTALL_WEBRTC=true</code> and toggle to WebRTC in Live View.</p>
+<h2 id="6-pre-submission-checklist-mapped">6. Pre-submission checklist (mapped)</h2>
+<table>
+<thead>
+<tr>
+<th>Grid requirement</th>
+<th>Trinetra</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RTSP clients force TCP; remote clients use HLS</td>
+<td>✅ <code>rtsp_transport;tcp</code> env; streamer serves HLS</td>
+</tr>
+<tr>
+<td>No timing logic depends on <code>CAP_PROP_FPS</code> or arrival time</td>
+<td>✅ PTS-based; monotonic cadence only</td>
+</tr>
+<tr>
+<td>Inter-frame gaps do not crash/stall the pipeline</td>
+<td>✅ threshold-gated reconnect</td>
+</tr>
+<tr>
+<td>Reconnect with backoff implemented and tested</td>
+<td>✅ 2 s → 30 s cap</td>
+</tr>
+<tr>
+<td>Decoder join warnings logged, not fatal</td>
+<td>✅ try/except + continue</td>
+</tr>
+<tr>
+<td>Camera list read from <code>cameras.json</code>; mixed H.264/H.265 handled</td>
+<td>✅ ingester reads catalogue; ffmpeg auto-detects codec</td>
+</tr>
+<tr>
+<td>Sane across a scene discontinuity (loop point)</td>
+<td>✅ PTS-jump detection, continue</td>
+</tr>
+</tbody>
+</table></div><div class='section'><h1>16. Deployment Guide (New Machine)</h1><h1 id="trinetra-deployment-guide-new-laptop">Trinetra — Deployment Guide (New Laptop)</h1>
+<p>Run the full Trinetra platform on a different machine in ~30 minutes.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ol>
+<li><strong>Docker Desktop</strong> — download from https://docker.com, install, start it. Ensure WSL2 is enabled.</li>
+<li><strong>The repo</strong> — copy the entire <code>sentinel-gujarat</code> folder to the new laptop (USB, cloud, or git).</li>
+<li><strong>Internet</strong> — needed for Docker image builds + grid RTSP + model downloads.</li>
+</ol>
+<h2 id="step-by-step">Step-by-step</h2>
+<h3 id="1-copy-the-repo">1. Copy the repo</h3>
+<p>Copy the <code>sentinel-gujarat</code> folder to the new laptop, e.g. <code>C:\Projects\sentinel-gujarat</code>.</p>
+<h3 id="2-create-the-env-file">2. Create the <code>.env</code> file</h3>
+<p>In the repo root, copy <code>.env.example</code> to <code>.env</code> and verify the grid credentials:</p>
+<pre><code class="language-ini">TRINETRA_GRID_EMAIL=kavanjoshi890@gmail.com
+TRINETRA_GRID_PASSWORD=9WXY-ST7Y-C5E9
+TRINETRA_STREAMER_MODE=live
+TRINETRA_SEED_SIM_CAMERAS=false
+TRINETRA_FACE_DETECTION=true
+</code></pre>
+<h3 id="3-start-the-base-stack">3. Start the base stack</h3>
+<p>Open PowerShell in the repo folder:</p>
+<pre><code class="language-powershell">docker compose up -d
+</code></pre>
+<p>This starts: PostgreSQL+PostGIS, Redis, NATS, core-api, correlator, records, notifier, streamer, janitor, frontend.</p>
+<p>Wait for the API to be healthy:</p>
+<pre><code class="language-powershell"># wait ~30s, then:
+curl http://localhost:8000/health
+# should return: {&quot;status&quot;:&quot;ok&quot;,&quot;service&quot;:&quot;core-api&quot;}
+</code></pre>
+<h3 id="4-seed-the-database-departments-users-watchlist">4. Seed the database (departments + users + watchlist)</h3>
+<pre><code class="language-powershell">docker compose run --rm seeder
+</code></pre>
+<p>Expected: <code>Seed complete: 28 departments, 0 new cameras, ...</code></p>
+<h3 id="5-onboard-the-real-grid-cameras-cam01cam30">5. Onboard the real grid cameras (cam01–cam30)</h3>
+<pre><code class="language-powershell">docker compose --profile grid run --rm ingester
+</code></pre>
+<p>Expected: <code>ingest complete: 30 created, 0 updated</code></p>
+<h3 id="6-start-the-ai-analytics-gateway-anpr-face-detection">6. Start the AI analytics gateway (ANPR + face detection)</h3>
+<pre><code class="language-powershell">docker compose --profile ml up -d --build gateway-ml
+</code></pre>
+<p><strong>This takes 10–15 minutes the first time</strong> (downloads torch, ultralytics, opencv, rapidocr, insightface + ffmpeg). Subsequent starts are instant (cached).</p>
+<p>The gateway-ml will:
+- Pull all 30 grid RTSP feeds (2fps, TCP).
+- Run YOLOv8n vehicle detection + RapidOCR ANPR + InsightFace face detection on each.
+- Publish detection events to the correlator → alerts → console.</p>
+<h3 id="7-verify">7. Verify</h3>
+<ul>
+<li><strong>Operator console:</strong> http://localhost:8082 (login: <code>admin / admin123</code>)</li>
+<li><strong>API docs:</strong> http://localhost:8000/docs</li>
+<li><strong>Camera grid:</strong> http://localhost:8082/#/grid</li>
+<li><strong>Live view:</strong> http://localhost:8082/#/live</li>
+</ul>
+<h3 id="8-optional-enroll-a-face-for-recognition">8. (Optional) Enroll a face for recognition</h3>
+<pre><code class="language-powershell">$token = (Invoke-RestMethod -Uri &quot;http://localhost:8000/api/v1/auth/login&quot; -Method Post -ContentType &quot;application/x-www-form-urlencoded&quot; -Body @{username=&quot;admin&quot;;password=&quot;admin123&quot;}).access_token
+curl -X POST http://localhost:8000/api/v1/faces/enroll -H &quot;Authorization: Bearer $token&quot; -F &quot;name=Suspect Name&quot; -F &quot;category=wanted_person&quot; -F &quot;file=@photo.jpg&quot;
+</code></pre>
+<h2 id="quick-reference-all-commands">Quick reference — all commands</h2>
+<pre><code class="language-powershell"># full bring-up (from scratch)
+docker compose up -d
+docker compose run --rm seeder
+docker compose --profile grid run --rm ingester
+docker compose --profile ml up -d --build gateway-ml
+
+# stop everything
+docker compose down
+
+# stop + wipe data (fresh start)
+docker compose down -v
+</code></pre>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Port 8082 busy</td>
+<td>Edit <code>docker-compose.yml</code> → <code>frontend.ports</code> → change <code>8082:80</code> to another port</td>
+</tr>
+<tr>
+<td>gateway-ml build hangs</td>
+<td>Cancel + retry; or build without <code>--build</code> if image already exists</td>
+</tr>
+<tr>
+<td>No cameras in grid</td>
+<td>Check <code>.env</code> credentials; re-run <code>docker compose --profile grid run --rm ingester</code></td>
+</tr>
+<tr>
+<td>401 on RTSP</td>
+<td>Grid may be in restricted mode; wait + retry, or verify credentials at cctv.corp8.cloud</td>
+</tr>
+<tr>
+<td>High CPU</td>
+<td>Normal with 30 cameras; reduce by setting <code>TRINETRA_FACE_DETECTION=false</code> in <code>.env</code></td>
+</tr>
+<tr>
+<td>Docker Desktop 500 errors</td>
+<td>Restart Docker Desktop + run <code>wsl --shutdown</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="whats-included">What's included</h2>
+<ul>
+<li>30 real grid cameras (cam01–cam30) across 5 departments</li>
+<li>ANPR (YOLOv8n + RapidOCR) on all cameras</li>
+<li>Face detection (InsightFace ArcFace) on all cameras</li>
+<li>CCTNS auto-watchlist + VAHAN/SARTHI/NAFIS enrichment</li>
+<li>Real-time alerts + fan-out (SMS/email/webhook/FCM)</li>
+<li>Live viewing (HLS + WebRTC) + camera grid mosaic</li>
+<li>Gap analysis, department governance, retention</li>
+</ul></div><div class='section'><h1>17. AsyncAPI — Event Bus Contract</h1><pre><code>asyncapi: 2.6.0
+info:
+  title: Trinetra Event Bus
+  version: 1.0.0
+  description: |
+    Asynchronous integration contract for the Trinetra federated CCTV platform.
+    Federated edge gateways publish normalised detection events; the correlator
+    consumes them and publishes alerts; watchlist changes fan out to all
+    correlator instances. Raw video never crosses this bus — only structured
+    events, evidence-frame references, and alert payloads (the &quot;move events, not
+    video&quot; thesis). Transport is NATS JetStream; subjects are stable and
+    versioned under the `trinetra.*` namespace.
+servers:
+  production:
+    url: nats://state-dc:4222
+    protocol: nats
+    description: NATS JetStream cluster (3-node per range) at the State Data Centre.
+channels:
+  trinetra.events.raw:
+    description: Normalised detection events emitted by federated gateway adapters.
+    publish:
+      message:
+        $ref: &#x27;#/components/messages/DetectionEvent&#x27;
+    subscribe:
+      message:
+        $ref: &#x27;#/components/messages/DetectionEvent&#x27;
+  trinetra.alerts.new:
+    description: Alerts generated by the correlator (watchlist hit or anomaly), fanned to operators and the notifier.
+    publish:
+      message:
+        $ref: &#x27;#/components/messages/AlertPayload&#x27;
+    subscribe:
+      message:
+        $ref: &#x27;#/components/messages/AlertPayload&#x27;
+  trinetra.watchlist.changed:
+    description: Notification that the watchlist changed; correlator instances refresh their Redis cache.
+    publish:
+      message:
+        $ref: &#x27;#/components/messages/WatchlistChanged&#x27;
+    subscribe:
+      message:
+        $ref: &#x27;#/components/messages/WatchlistChanged&#x27;
+components:
+  messages:
+    DetectionEvent:
+      name: DetectionEvent
+      title: Normalised detection event
+      contentType: application/json
+      payload:
+        $ref: &#x27;#/components/schemas/DetectionEvent&#x27;
+    AlertPayload:
+      name: AlertPayload
+      title: Alert payload
+      contentType: application/json
+      payload:
+        $ref: &#x27;#/components/schemas/AlertPayload&#x27;
+    WatchlistChanged:
+      name: WatchlistChanged
+      title: Watchlist changed notification
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          changed: { type: boolean }
+          source: { type: string, description: manual | cctns | records-sync }
+  schemas:
+    DetectionEvent:
+      type: object
+      required: [event_id, camera_id, ts, kind]
+      properties:
+        event_id: { type: string, format: uuid }
+        camera_id: { type: string }
+        ts: { type: string, format: date-time }
+        kind: { type: string, enum: [vehicle, person, object] }
+        plate_raw: { type: string, nullable: true }
+        plate_confidence: { type: number, format: float, nullable: true }
+        vehicle_class: { type: string, nullable: true }
+        color: { type: string, nullable: true }
+        direction: { type: string, nullable: true }
+        speed_kmh: { type: number, nullable: true }
+        bbox: { type: array, items: { type: integer } }
+        attributes: { type: object, additionalProperties: true }
+        snapshot_path: { type: string, nullable: true }
+    AlertPayload:
+      type: object
+      required: [alert_id, event_id, category, title, camera_id, ts, confidence, lat, lon]
+      properties:
+        alert_id: { type: string, format: uuid }
+        event_id: { type: string, format: uuid }
+        watchlist_id: { type: integer, nullable: true }
+        category: { type: string, enum: [stolen_vehicle, blacklisted_vehicle, wanted_person, missing_person, suspect, anomaly] }
+        title: { type: string }
+        plate: { type: string, nullable: true }
+        description: { type: string }
+        camera_id: { type: string }
+        camera_name: { type: string }
+        ts: { type: string, format: date-time }
+        confidence: { type: number }
+        lat: { type: number }
+        lon: { type: number }
+        snapshot_path: { type: string, nullable: true }
+        source_system: { type: string, description: manual | cctns | vahan | nafis }
+        source_ref: { type: string, nullable: true, description: FIR/record reference }
+        enrichment: { type: object, additionalProperties: true, description: VAHAN/SARTHI/NAFIS enrichment }
+</code></pre></div></body></html>

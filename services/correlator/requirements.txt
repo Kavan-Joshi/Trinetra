@@ -1,0 +1,6 @@
+sqlalchemy[asyncio]>=2.0.30
+asyncpg>=0.29
+pydantic>=2.7
+pydantic-settings>=2.3
+nats-py>=2.7
+redis>=5.0

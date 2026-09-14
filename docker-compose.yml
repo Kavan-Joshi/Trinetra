@@ -1,0 +1,191 @@
+name: trinetra
+
+x-python-env: &python-env
+  TRINETRA_DATABASE_URL: postgresql+asyncpg://trinetra:trinetra@postgres:5432/trinetra
+  TRINETRA_NATS_URL: nats://nats:4222
+  TRINETRA_REDIS_URL: redis://redis:6379/0
+  TRINETRA_EVIDENCE_DIR: /data/evidence
+  TRINETRA_SIM_SPEED: ${TRINETRA_SIM_SPEED:-20}
+  TRINETRA_JWT_SECRET: ${TRINETRA_JWT_SECRET:-dev-secret-change-in-production}
+  TRINETRA_GRID_EMAIL: ${TRINETRA_GRID_EMAIL:-}
+  TRINETRA_GRID_PASSWORD: ${TRINETRA_GRID_PASSWORD:-}
+  TRINETRA_GRID_CATALOGUE_URL: ${TRINETRA_GRID_CATALOGUE_URL:-https://cctv.corp8.cloud/cameras.json}
+  TRINETRA_GRID_RTSP_HOST: ${TRINETRA_GRID_RTSP_HOST:-103.250.160.189:8554}
+  TRINETRA_GRID_HLS_BASE: ${TRINETRA_GRID_HLS_BASE:-https://cctv.corp8.cloud}
+  TRINETRA_GRID_WHEP_HOST: ${TRINETRA_GRID_WHEP_HOST:-103.250.160.189:8889}
+  TRINETRA_SEED_SIM_CAMERAS: ${TRINETRA_SEED_SIM_CAMERAS:-true}
+
+services:
+  postgres:
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_USER: trinetra
+      POSTGRES_PASSWORD: trinetra
+      POSTGRES_DB: trinetra
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U trinetra -d trinetra"]
+      interval: 5s
+      timeout: 3s
+      retries: 24
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 24
+
+  nats:
+    image: nats:2.10-alpine
+    command: "-js -sd /data -m 8222"
+    volumes:
+      - natsdata:/data
+
+  core-api:
+    build:
+      context: .
+      dockerfile: services/core_api/Dockerfile
+    environment: *python-env
+    restart: unless-stopped
+    volumes:
+      - evidence:/data/evidence
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      nats:
+        condition: service_started
+
+  correlator:
+    build:
+      context: .
+      dockerfile: services/correlator/Dockerfile
+    environment: *python-env
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      nats:
+        condition: service_started
+
+  gateway-sim:
+    build:
+      context: .
+      dockerfile: services/gateway/Dockerfile
+    environment:
+      <<: *python-env
+      TRINETRA_GATEWAY_MODE: simulation
+    restart: unless-stopped
+    volumes:
+      - evidence:/data/evidence
+    depends_on:
+      nats:
+        condition: service_started
+
+  gateway-ml:
+    profiles: ["ml"]
+    build:
+      context: .
+      dockerfile: services/gateway/Dockerfile
+      args:
+        INSTALL_ML: "true"
+    environment:
+      <<: *python-env
+      TRINETRA_GATEWAY_MODE: rtsp
+      TRINETRA_GATEWAY_CAMERA_FILTER: '^cam\d+$'
+      TRINETRA_GATEWAY_GROUPS: rtsp,onvif,gb28181
+      TRINETRA_FACE_DETECTION: 'true'
+    volumes:
+      - evidence:/data/evidence
+    depends_on:
+      nats:
+        condition: service_started
+
+  seeder:
+    build:
+      context: .
+      dockerfile: scripts/Dockerfile
+    environment: *python-env
+    restart: "no"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  ingester:
+    profiles: ["grid"]
+    build:
+      context: .
+      dockerfile: scripts/Dockerfile
+    environment: *python-env
+    restart: "no"
+    command: ["python", "ingest_catalogue.py"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  janitor:
+    build:
+      context: .
+      dockerfile: services/janitor/Dockerfile
+    environment: *python-env
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  records:
+    build:
+      context: .
+      dockerfile: services/records/Dockerfile
+    environment: *python-env
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      nats:
+        condition: service_started
+
+  notifier:
+    build:
+      context: .
+      dockerfile: services/notifier/Dockerfile
+    environment: *python-env
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      nats:
+        condition: service_started
+
+  streamer:
+    build:
+      context: .
+      dockerfile: services/streamer/Dockerfile
+    environment:
+      <<: *python-env
+      TRINETRA_STREAMER_MODE: ${TRINETRA_STREAMER_MODE:-sim}
+    restart: unless-stopped
+    depends_on:
+      nats:
+        condition: service_started
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "8082:80"
+    depends_on:
+      - core-api
+
+volumes:
+  pgdata:
+  natsdata:
+  evidence:
